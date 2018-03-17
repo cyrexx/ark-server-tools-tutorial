@@ -254,3 +254,8 @@ arkmanager restart @theisland // Restart the specified instance
 arkmanager update @theisland // Check the specified instance for updates and install updates if available
 arkmanager status @theisland // Check the online status of the specified instance
 ```
+
+## TODO ##
+- [x] Add tutorial README.md
+- [ ] Add config files and demo configs
+- [ ] Test turorial with sudo access rights
