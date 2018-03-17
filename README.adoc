@@ -40,26 +40,20 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 `adduser ARK_SERVER_USERNAME sudo` :: Add the ARK-Server user to the sudo group.
 
 ## 4. Configure and prepare Linux system ##
-`vim /etc/sysctl.conf` :: Edit the `sysctl.conf` file.
-
-Add the following line at the very end - if not already present (press `i` for edit mode):
+`vim /etc/sysctl.conf` :: Edit the `sysctl.conf` file. Add the following line at the very end - if not already present (press `i` for edit mode):
 ```
 fs.file-max=100000
 ```
 Save and exit vim (press `ESC` &rarr; `:wq`).
 
-`vim /etc/security/limits.conf` :: Edit the `limits.conf` file.
-
-Add following line above `# End of file` - if not already present (press `i` for edit mode):
+`vim /etc/security/limits.conf` :: Edit the `limits.conf` file. Add following line above `# End of file` - if not already present (press `i` for edit mode):
 ```
 * soft nofile 100000
 * hard nofile 100000
 ```
 Save and exit vim (press `ESC` &rarr; `:wq`).
 
-`vim /etc/pam.d/common-session` :: Edit the `common-session` file.
-
-Add following line above `# end of pam-auth-update config` - if not already present (press `i` for edit mode):
+`vim /etc/pam.d/common-session` :: Edit the `common-session` file. Add following line above `# end of pam-auth-update config` - if not already present (press `i` for edit mode):
 ```
 session required pam_limits.so
 ```
