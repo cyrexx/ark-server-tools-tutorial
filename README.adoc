@@ -29,18 +29,11 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 * Map: `Aberration` - Instance: `aberration.cfg` - Ports: `7785,7786,27015,32334`
 
 ## 3. Install required packages and add ARK-Server user ##
-Switch to root user:
-```
-su
-```
-Update repository and system packages:
-```
-apt-get update && apt-get upgrade
-```
-Install required packages:
-```
-apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop
-```
+`su` :: Switch to root user.
+
+`apt-get update && apt-get upgrade` :: Update package repository and system packages.
+
+`apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop` :: Install all required packages.
 
 `adduser ARK_SERVER_USERNAME` :: Add ARK-Server user (change **ARK_SERVER_USERNAME**), choose a strong password, other fields can be left blank.
 
