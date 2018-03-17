@@ -43,11 +43,11 @@ apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop
 ```
 Add the ARK-Server user (choose a strong password, other fields can be left blank):
 
-`adduser **ARK_SERVER_USERNAME**`
+`adduser ARK_SERVER_USERNAME`
 
 Add the ARK-Server user to the sudo group:
 ```
-adduser **ARK_SERVER_USERNAME** sudo
+adduser ARK_SERVER_USERNAME sudo
 ```
 
 ## 4. Configure and prepare Linux system ##
@@ -100,11 +100,11 @@ iptables -A INPUT -p tcp --dport 32330:32335 -j ACCEPT
 ## 6. Install ARK Server-Tools and steamcmd (required for ARK servers) ##
 Download and install ARK Server-Tools:
 ```
-curl -sL http://git.io/vtf5N | bash -s **ARK_SERVER_USERNAME** --me
+curl -sL http://git.io/vtf5N | bash -s ARK_SERVER_USERNAME --me
 ```
 Switch to the ARK-Server user:
 ```
-su **ARK_SERVER_USERNAME**
+su ARK_SERVER_USERNAME
 ```
 Go to home directory:
 ```
@@ -128,7 +128,7 @@ arkmanager install
 ```
 Install steamcmd:
 ```
-cd /home/**ARK_SERVER_USERNAME**/ARK/
+cd /home/ARK_SERVER_USERNAME/ARK/
 ./SteamCMDInstall.sh
 ```
 
@@ -171,7 +171,7 @@ Save and exit vim (press `ESC` &rarr; `:wq`).
 ## 9. Install mods ##
 Switch to ARK-Server user:
 ```
-su **ARK_SERVER_USERNAME**
+su ARK_SERVER_USERNAME
 ```
 Install the mods:
 ```
@@ -213,7 +213,7 @@ Save and exit vim (press `ESC` &rarr; `:wq`).
 
 Create a symlink to `ark-restart.sh`:
 ```
-sudo ln -s /home/**ARK_SERVER_USERNAME**/ARK/ShooterGame/Binaries/ark-restart.sh /usr/bin/
+sudo ln -s /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Binaries/ark-restart.sh /usr/bin/
 ```
 
 ## 11. Create a cronjob to check for updates every hour ##
