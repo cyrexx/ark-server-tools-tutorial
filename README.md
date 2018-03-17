@@ -249,7 +249,7 @@ arkmanager update @all // Check all instances for updates and install updates if
 arkmanager status @all // Check the online status of all instances
 ```
 
-Commands for a `@single` instance (available instances: `@theisland`, `@thecenter`, `@ragnarok`, `@scorchedearth`, `@aberration`):
+Commands for a `@single` instance:
 ```
 arkmanager start @theisland // Start the specified instance
 arkmanager stop @theisland // Stop the specified instance
@@ -257,6 +257,7 @@ arkmanager restart @theisland // Restart the specified instance
 arkmanager update @theisland // Check the specified instance for updates and install updates if available
 arkmanager status @theisland // Check the online status of the specified instance
 ```
+(**available instances:** `@theisland`, `@thecenter`, `@ragnarok`, `@scorchedearth`, `@aberration`)
 
 ---
 
