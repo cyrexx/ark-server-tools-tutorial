@@ -7,7 +7,7 @@ ARK Server-Tools for Linux - Installation of multiple ark server instances in a 
 Debian 8 or Derivates with ssh access and sudo.
 
 ### Instances, Maps, Ports set up in this tutorial ###
-#### Please change the values to your need ####
+#### _Please change the values according to your setup_ ####
 * ARK server user name: `ark`
 * ARK cluster name: `pveark`
 
