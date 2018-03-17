@@ -257,7 +257,7 @@ arkmanager restart @theisland // Restart the specified instance
 arkmanager update @theisland // Check the specified instance for updates and install updates if available
 arkmanager status @theisland // Check the online status of the specified instance
 ```
-(**available instances:** `@theisland`, `@thecenter`, `@ragnarok`, `@scorchedearth`, `@aberration`)
+(available instances: `@theisland`, `@thecenter`, `@ragnarok`, `@scorchedearth`, `@aberration`)
 
 ---
 
