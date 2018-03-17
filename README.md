@@ -264,4 +264,4 @@ arkmanager status @theisland // Check the online status of the specified instanc
 ## TODO ##
 - [x] Add tutorial README.md
 - [ ] Add config files and demo configs
-- [ ] Test turorial with sudo access rights
+- [ ] Test tutorial with sudo access rights
