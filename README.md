@@ -1,15 +1,20 @@
 # ark-server-tools-tutorial
-ARK Server-Tools for Linux - Installation of multiple ark server instances in a crossark travel cluster
+ARK Server-Tools for Linux - Installation of multiple ark server instances in a crossark travel cluster.
 
-## System Setup ##
+In this tutorial you will learn how to setup and manage multiple ark servers with enabled crossark travel.
 
-### Operating System ###
-Debian 8 or Derivates with ssh access and sudo.
+# System Setup #
 
-### Instances, Maps, Ports set up in this tutorial ###
-#### _Please change the values according to your setup_ ####
-* ARK server user name: `ark`
-* ARK cluster name: `pveark`
+## Operating System ##
+Debian 8 or derivates like Ubuntu, with sudo installed and root access.
+
+The installation may work with sudo access rights, but I haven't tested it yet. Just put a `sudo` in front of every root command if you don't have root access (e.g. `sudo apt-get update && sudo apt-get upgrade`).
+
+### _Please change these values according to your setup:_ ###
+* ARK-Server username: `ARK_SERVER_USERNAME`
+* ARK-Cluster ID: `ARK_CLUSTER_ID`
+
+This tutorial will setup the following servers:
 
 * Map: `TheIsland` - Instance: `theisland.cfg` - Ports: `7777,7778,27015,32330`
 * Map: `TheCenter` - Instance: `thecenter.cfg` - Ports: `7779,7780,27016,32331`
@@ -30,13 +35,13 @@ Install required packes:
 ```
 apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop
 ```
-Add the ark server user:
+Add the ARK-Server user (choose a strong password, other fields can be left blank):
 ```
-adduser ark
+adduser ARK_SERVER_USERNAME
 ```
-Add the ark server user to the sudo group:
+Add the ARK-Server user to the sudo group:
 ```
-adduser ark sudo
+adduser ARK_SERVER_USERNAME sudo
 ```
 
 ## Configure and prepare Linux system ##
@@ -86,14 +91,14 @@ iptables -A INPUT -p tcp --dport 27015:27019 -j ACCEPT
 iptables -A INPUT -p udp --dport 27015:27019 -j ACCEPT
 iptables -A INPUT -p tcp --dport 32330:32335 -j ACCEPT
 ```
-## Install the ARK Server-Tools and steamcmd (required for ark servers) ##
+## Install the ARK Server-Tools and steamcmd (required for ARK servers) ##
 Download and install ARK Server-Tools:
 ```
-curl -sL http://git.io/vtf5N | bash -s ark --me
+curl -sL http://git.io/vtf5N | bash -s ARK_SERVER_USERNAME --me
 ```
-Switch to the ARK server user:
+Switch to the ARK-Server user:
 ```
-su ark
+su ARK_SERVER_USERNAME
 ```
 Go to home directory:
 ```
@@ -109,19 +114,19 @@ cd steamcmd
 ```
 Download and extract steamcmd:
 ```
-curl -sqL "https://steamcdn-a.akamaihd.net/clien..." | tar zxvf -
+curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
 ```
-While still in the steamcmd directory, install the arkmanager:
+While still in steamcmd directory, install the arkmanager:
 ```
 arkmanager install
 ```
 Install steamcmd:
 ```
-cd /home/ark/ARK/
+cd /home/ARK_SERVER_USERNAME/ARK/
 ./SteamCMDInstall.sh
 ```
 
-## Configure the arkmanager and ark server instances ##
+## Configure the arkmanager and ARK-Server instances ##
 Switch back to root user:
 ```
 exit
@@ -144,11 +149,11 @@ cd /etc/arkmanager/instances/
 ```
 Copy `main.cfg` (with default settings) to your new instance:
 ```
-cp main.cfg NEW-INSTANCE.cfg
+cp main.cfg NEW_SERVER_INSTANCE.cfg
 ```
 Edit your new config:
 ```
-vim NEW-INSTANCE.cfg
+vim NEW_SERVER_INSTANCE.cfg
 ```
 Add flags, options and more (press `i` for edit mode):
 ```
@@ -158,15 +163,15 @@ arkflag_NoBattleEye=true
 Save and exit vim (press `ESC` &rarr; `:wq`).
 
 ## Install mods ##
-Switch to ark server user:
+Switch to ARK-Server user:
 ```
-su ark
+su ARK_SERVER_USERNAME
 ```
 Install the mods:
 ```
 arkmanager installmods
 ```
-Start the ark sever:
+Start the ARK-Sever:
 ```
 arkmanager start
 ```
@@ -202,7 +207,7 @@ Save and exit vim (press `ESC` &rarr; `:wq`).
 
 Create a symlink to `ark-restart.sh`:
 ```
-sudo ln -s /home/ark/ARK/ShooterGame/Binaries/ark-restart.sh /usr/bin/
+sudo ln -s /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Binaries/ark-restart.sh /usr/bin/
 ```
 
 ## Create a cronjob to check for updates every hour ##
@@ -216,7 +221,7 @@ arkmanager install-cronjob --hourly update @all --saveworld --warn --update-mods
 ```
 
 ### Check if cronjob added successfully
-Switch back to ark server user:
+Switch back to ARK-Server user:
 ```
 exit
 ```
