@@ -17,8 +17,8 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 ## 2. Important notice ##
 **_Please change these values according to your setup:_**
 
-* ARK-Server username: **`ARK_SERVER_USERNAME`**
-* ARK-Cluster ID: **`ARK_CLUSTER_ID`**
+* ARK-Server username: `ARK_SERVER_USERNAME`
+* ARK-Cluster ID: `ARK_CLUSTER_ID`
 
 **This tutorial will setup following server instances:**
 
