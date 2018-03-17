@@ -3,6 +3,10 @@
 
 In this tutorial you will learn how to setup and manage multiple ark servers with enabled crossark travel.
 
+:toc: macro
+:toc-title:
+:toclevels: 99
+
 ## System Setup ##
 **Operating System:** Debian 8 or derivates like Ubuntu, with sudo installed and root access.
 
