@@ -235,7 +235,7 @@ The command (`crontab -e`) should display:
 
 ---
 
-:thumbsup: **DONE ~ HAVE FUN** :thumbsup:
+:checkered_flag::checkered_flag::checkered_flag: **DONE ~ HAVE FUN** :thumbsup:
 
 ---
 
