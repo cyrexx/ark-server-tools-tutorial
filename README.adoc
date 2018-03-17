@@ -42,7 +42,7 @@ Install required packages:
 apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop
 ```
 
-`adduser ARK_SERVER_USERNAME` :: Add ARK-Server user **(change ARK_SERVER_USERNAME)**. Choose a strong password, other fields can be left blank.
+`adduser ARK_SERVER_USERNAME` :: Add ARK-Server user (change **ARK_SERVER_USERNAME**), choose a strong password, other fields can be left blank.
 
 Add the ARK-Server user to the sudo group:
 ```
