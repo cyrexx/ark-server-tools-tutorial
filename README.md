@@ -19,35 +19,35 @@ Map: Aberration - Instance: aberration.cfg - Ports: 7785,7786,27015,32334
 ## Install required packages ##
 Switch to the root user, install required packes, add the ark server user and give him sudo rights.
 
-´´´bash
+```bash
 su root
 apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop
 adduser ark
 adduser ark sudo
-´´´
+```
 
-´´´
+```
 su root
 apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop
 adduser ark
 adduser ark sudo
-´´´
+```
 
 ## Configure and prepare Linux system ##
 Edit the `sysctl.conf` file
 
-´´´bash
+```bash
 vim /etc/sysctl.conf
-´´´
+```
 
-´´´
+```
 vim /etc/sysctl.conf
-´´´
+```
 
 Add the following line at the very end - if not already present (press `i` for edit mode)
-´´´
+```
 fs.file-max=100000
-´´´
+```
 Save and exit vim (press `ESC` -> `:wq`)
 
 Edit the limits.conf file
