@@ -8,12 +8,12 @@ In this tutorial you will learn how to setup and manage multiple ark servers wit
 
 The installation may work with sudo access rights, but I haven't tested it yet. Just put a `sudo` in front of every root command if you don't have root access (e.g. `sudo apt-get update && sudo apt-get upgrade`).
 
-## IMPORTANT notice ##
+## Important notice ##
 **_Please change these values according to your setup:_**
 * ARK-Server username: `ARK_SERVER_USERNAME`
 * ARK-Cluster ID: `ARK_CLUSTER_ID`
 
-This tutorial will setup the following servers:
+**This tutorial will setup the following servers:**
 
 * Map: `TheIsland` - Instance: `theisland.cfg` - Ports: `7777,7778,27015,32330`
 * Map: `TheCenter` - Instance: `thecenter.cfg` - Ports: `7779,7780,27016,32331`
@@ -233,7 +233,7 @@ The command (`crontab -e`) should display:
 0 * * * * /usr/local/bin/arkmanager --cronjob update @all  --saveworld --warn --update-mods --args  -- >/dev/null 2>&1
 ```
 
-## :thumbsup: DONE ~ HAVE FUN :thumbsup: ##
+:thumbsup: **DONE ~ HAVE FUN** :thumbsup:
 
 ---
 
