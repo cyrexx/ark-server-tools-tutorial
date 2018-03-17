@@ -13,7 +13,9 @@ toc::[]
 **Operating System:** Debian 8 or derivates like Ubuntu, with sudo installed and root access.
 
 The installation may work with sudo access rights, but I haven't tested it yet. Just put a `sudo` in front of every root command if you don't have root access (e.g. `sudo apt-get update && sudo apt-get upgrade`).
+
 ---
+
 ## 2. Important notice ##
 **_Please change these values according to your setup:_**
 
