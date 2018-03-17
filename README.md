@@ -187,7 +187,7 @@ fi
 sleep 30
 done
 ```
-Save and exit vim (press `ESC` -> `:wq`).
+Save and exit vim (press `ESC` &rarr; `:wq`).
 
 Create the file `ark-restart.sh`:
 ```
@@ -198,7 +198,7 @@ Enter following script (press `i` for edit mode):
 cd /usr/local/bin
 ./arkmanager restart
 ```
-Save and exit vim (press `ESC` -> `:wq`).
+Save and exit vim (press `ESC` &rarr; `:wq`).
 
 Create a symlink to `ark-restart.sh`:
 ```
