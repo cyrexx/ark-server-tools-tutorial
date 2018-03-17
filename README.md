@@ -48,7 +48,7 @@ Add the following line at the very end - if not already present (press `i` for e
 ```
 fs.file-max=100000
 ```
-Save and exit vim (press `ESC` -> `:wq`).
+Save and exit vim (press `ESC` &rarr; `:wq`).
 
 Edit the `limits.conf` file:
 ```
@@ -59,7 +59,7 @@ Add following line above `# End of file` - if not already present (press `i` for
 * soft nofile 100000
 * hard nofile 100000
 ```
-Save and exit vim (press `ESC` -> `:wq`).
+Save and exit vim (press `ESC` &rarr; `:wq`).
 
 Edit the `common-session` file:
 ```
@@ -69,7 +69,7 @@ Add following line above `# end of pam-auth-update config` - if not already pres
 ```
 session required pam_limits.so
 ```
-Save and exit vim (press `ESC` -> `:wq`).
+Save and exit vim (press `ESC` &rarr; `:wq`).
 
 ## Open firewall ports ##
 
@@ -135,7 +135,7 @@ Add flags, options and more (press `i` for edit mode):
 arkflag_log=true
 arkflag_NoBattleEye=true
 ```
-Save and exit vim (press `ESC` -> `:wq`).
+Save and exit vim (press `ESC` &rarr; `:wq`).
 
 ### Configure the default instance ###
 Switch to the instances folder:
@@ -155,7 +155,7 @@ Add flags, options and more (press `i` for edit mode):
 arkflag_log=true
 arkflag_NoBattleEye=true
 ```
-Save and exit vim (press `ESC` -> `:wq`).
+Save and exit vim (press `ESC` &rarr; `:wq`).
 
 ## Install mods ##
 Switch to ark server user:
