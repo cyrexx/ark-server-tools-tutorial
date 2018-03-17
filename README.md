@@ -1,4 +1,4 @@
-# ARK SERVER-TOOLS TUTORIAL
+# ARK Server-Tools Tutorial
 ARK Server-Tools for Linux - Installation of multiple ark server instances in a crossark travel cluster.
 
 In this tutorial you will learn how to setup and manage multiple ark servers with enabled crossark travel.
