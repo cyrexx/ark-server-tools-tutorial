@@ -9,12 +9,12 @@ In this tutorial you will learn how to setup and manage multiple ark servers wit
 
 toc::[]
 
-## System Setup ##
+## 1. System Setup ##
 **Operating System:** Debian 8 or derivates like Ubuntu, with sudo installed and root access.
 
 The installation may work with sudo access rights, but I haven't tested it yet. Just put a `sudo` in front of every root command if you don't have root access (e.g. `sudo apt-get update && sudo apt-get upgrade`).
 
-## Important notice ##
+## 2. Important notice ##
 **_Please change these values according to your setup:_**
 * ARK-Server username: `ARK_SERVER_USERNAME`
 * ARK-Cluster ID: `ARK_CLUSTER_ID`
@@ -27,7 +27,7 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 * Map: `ScorchedEarth` - Instance: `scorchedearth.cfg` - Ports: `7783,7784,27015,32333`
 * Map: `Aberration` - Instance: `aberration.cfg` - Ports: `7785,7786,27015,32334`
 
-## Install required packages and add ARK-Server user ##
+## 3. Install required packages and add ARK-Server user ##
 Switch to root user:
 ```
 su
@@ -49,7 +49,7 @@ Add the ARK-Server user to the sudo group:
 adduser ARK_SERVER_USERNAME sudo
 ```
 
-## Configure and prepare Linux system ##
+## 4. Configure and prepare Linux system ##
 Edit the `sysctl.conf` file:
 ```
 vim /etc/sysctl.conf
@@ -81,7 +81,7 @@ session required pam_limits.so
 ```
 Save and exit vim (press `ESC` &rarr; `:wq`).
 
-## Open firewall ports ##
+## 5. Open firewall ports ##
 **Short version (recommended)**
 ```
 iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT
@@ -96,7 +96,7 @@ iptables -A INPUT -p udp --dport 27015:27019 -j ACCEPT
 iptables -A INPUT -p tcp --dport 32330:32335 -j ACCEPT
 ```
 
-## Install ARK Server-Tools and steamcmd (required for ARK servers) ##
+## 6. Install ARK Server-Tools and steamcmd (required for ARK servers) ##
 Download and install ARK Server-Tools:
 ```
 curl -sL http://git.io/vtf5N | bash -s ARK_SERVER_USERNAME --me
@@ -131,7 +131,7 @@ cd /home/ARK_SERVER_USERNAME/ARK/
 ./SteamCMDInstall.sh
 ```
 
-## Configure arkmanager and ARK-Server instances ##
+## 7. Configure arkmanager and ARK-Server instances ##
 Switch back to root user:
 ```
 exit
@@ -147,7 +147,7 @@ arkflag_NoBattleEye=true
 ```
 Save and exit vim (press `ESC` &rarr; `:wq`).
 
-## Configure default instance ##
+## 8. Configure default instance ##
 Switch to instances folder:
 ```
 cd /etc/arkmanager/instances/
@@ -167,7 +167,7 @@ arkflag_NoBattleEye=true
 ```
 Save and exit vim (press `ESC` &rarr; `:wq`).
 
-## Install mods ##
+## 9. Install mods ##
 Switch to ARK-Server user:
 ```
 su ARK_SERVER_USERNAME
@@ -181,7 +181,7 @@ Start the ARK-Sever:
 arkmanager start
 ```
 
-## Configure autorestart on servercrash ##
+## 10 Configure autorestart on servercrash ##
 Create the file `ark-watchdog`:
 ```
 sudo vim ~/ARK/ShooterGame/Binaries/ark-watchdog
@@ -215,7 +215,7 @@ Create a symlink to `ark-restart.sh`:
 sudo ln -s /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Binaries/ark-restart.sh /usr/bin/
 ```
 
-## Create a cronjob to check for updates every hour ##
+## 11. Create a cronjob to check for updates every hour ##
 Switch to root user:
 ```	
 su
@@ -225,7 +225,7 @@ Install the cronjob:
 arkmanager install-cronjob --hourly update @all --saveworld --warn --update-mods
 ```
 
-### Check if cronjob added successfully
+### 11.1. Check if cronjob added successfully
 Switch back to ARK-Server user:
 ```
 exit
@@ -241,11 +241,11 @@ The command (`crontab -e`) should display:
 
 ---
 
-:checkered_flag::checkered_flag::checkered_flag: **DONE ~ HAVE FUN** :checkered_flag::checkered_flag::checkered_flag:
+**DONE ~ HAVE FUN**
 
 ---
 
-## Important arkmanager commands ##
+## 12. Important arkmanager commands ##
 Commands for `@all` instances:
 ```
 arkmanager start @all // Start all instances
@@ -267,7 +267,7 @@ arkmanager status @theisland // Check the online status of the specified instanc
 
 ---
 
-## TODO ##
+## 13. TODO ##
 - [x] Add tutorial README.md
 - [ ] Add config files and demo configs
 - [ ] Test tutorial with sudo access rights
