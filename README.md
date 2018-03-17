@@ -30,7 +30,7 @@ Update repository and system packages:
 ```
 apt-get update && apt-get upgrade
 ```
-Install required packes:
+Install required packages:
 ```
 apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop
 ```
@@ -232,6 +232,8 @@ The command (`crontab -e`) should display:
 ```
 0 * * * * /usr/local/bin/arkmanager --cronjob update @all  --saveworld --warn --update-mods --args  -- >/dev/null 2>&1
 ```
+
+---
 
 :thumbsup: **DONE ~ HAVE FUN** :thumbsup:
 
