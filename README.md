@@ -13,7 +13,7 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 * ARK-Server username: `ARK_SERVER_USERNAME`
 * ARK-Cluster ID: `ARK_CLUSTER_ID`
 
-**This tutorial will setup the following servers:**
+**This tutorial will setup following server instances:**
 
 * Map: `TheIsland` - Instance: `theisland.cfg` - Ports: `7777,7778,27015,32330`
 * Map: `TheCenter` - Instance: `thecenter.cfg` - Ports: `7779,7780,27016,32331`
@@ -90,7 +90,7 @@ iptables -A INPUT -p udp --dport 27015:27019 -j ACCEPT
 iptables -A INPUT -p tcp --dport 32330:32335 -j ACCEPT
 ```
 
-## Install the ARK Server-Tools and steamcmd (required for ARK servers) ##
+## Install ARK Server-Tools and steamcmd (required for ARK servers) ##
 Download and install ARK Server-Tools:
 ```
 curl -sL http://git.io/vtf5N | bash -s ARK_SERVER_USERNAME --me
@@ -115,7 +115,7 @@ Download and extract steamcmd:
 ```
 curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
 ```
-While still in steamcmd directory, install the arkmanager:
+While still in steamcmd directory, install arkmanager:
 ```
 arkmanager install
 ```
@@ -125,12 +125,12 @@ cd /home/ARK_SERVER_USERNAME/ARK/
 ./SteamCMDInstall.sh
 ```
 
-## Configure the arkmanager and ARK-Server instances ##
+## Configure arkmanager and ARK-Server instances ##
 Switch back to root user:
 ```
 exit
 ```
-Configure the arkmanager:
+Configure arkmanager:
 ```
 vim /etc/arkmanager/arkmanager.cfg
 ```
@@ -141,8 +141,8 @@ arkflag_NoBattleEye=true
 ```
 Save and exit vim (press `ESC` &rarr; `:wq`).
 
-## Configure the default instance ##
-Switch to the instances folder:
+## Configure default instance ##
+Switch to instances folder:
 ```
 cd /etc/arkmanager/instances/
 ```
