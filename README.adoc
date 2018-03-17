@@ -15,7 +15,8 @@ toc::[]
 The installation may work with sudo access rights, but I haven't tested it yet. Just put a `sudo` in front of every root command if you don't have root access (e.g. `sudo apt-get update && sudo apt-get upgrade`).
 
 ## 2. Important notice ##
-**Please change these values according to your setup:**
+**_Please change these values according to your setup:_**
+
 * ARK-Server username: **`ARK_SERVER_USERNAME`**
 * ARK-Cluster ID: **`ARK_CLUSTER_ID`**
 
