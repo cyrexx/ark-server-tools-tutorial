@@ -234,7 +234,7 @@ The command (`crontab -e`) should display:
 0 * * * * /usr/local/bin/arkmanager --cronjob update @all  --saveworld --warn --update-mods --args  -- >/dev/null 2>&1
 ```
 
-### FINISHED ~ HAVE FUN ###
+## :thumbsup: DONE ~ HAVE FUN :thumbsup: ##
 
 # Important arkmanager commands #
 Commands for `@all` instances:
