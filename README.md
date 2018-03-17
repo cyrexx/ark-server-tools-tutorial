@@ -21,7 +21,7 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 * Map: `ScorchedEarth` - Instance: `scorchedearth.cfg` - Ports: `7783,7784,27015,32333`
 * Map: `Aberration` - Instance: `aberration.cfg` - Ports: `7785,7786,27015,32334`
 
-## Install required packages ##
+## Install required packages and add ARK-Server user ##
 Switch to root user:
 ```
 su
