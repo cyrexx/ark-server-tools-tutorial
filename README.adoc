@@ -19,7 +19,9 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 
 * ARK-Server username: `ARK_SERVER_USERNAME`
 * ARK-Cluster ID: `ARK_CLUSTER_ID`
+
 ---
+
 **This tutorial will setup following server instances:**
 
 * Map: `TheIsland` - Instance: `theisland.cfg` - Ports: `7777,7778,27015,32330`
