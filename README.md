@@ -1,16 +1,15 @@
-# ark-server-tools-tutorial
+# ARK SERVER-TOOLS TUTORIAL
 ARK Server-Tools for Linux - Installation of multiple ark server instances in a crossark travel cluster.
 
 In this tutorial you will learn how to setup and manage multiple ark servers with enabled crossark travel.
 
-# System Setup #
-
-## Operating System ##
-Debian 8 or derivates like Ubuntu, with sudo installed and root access.
+## System Setup ##
+**Operating System:** Debian 8 or derivates like Ubuntu, with sudo installed and root access.
 
 The installation may work with sudo access rights, but I haven't tested it yet. Just put a `sudo` in front of every root command if you don't have root access (e.g. `sudo apt-get update && sudo apt-get upgrade`).
 
-### _Please change these values according to your setup:_ ###
+## IMPORTANT notice ##
+**_Please change these values according to your setup:_**
 * ARK-Server username: `ARK_SERVER_USERNAME`
 * ARK-Cluster ID: `ARK_CLUSTER_ID`
 
@@ -77,13 +76,12 @@ session required pam_limits.so
 Save and exit vim (press `ESC` &rarr; `:wq`).
 
 ## Open firewall ports ##
-
-### Short version (recommended) ###
+**Short version (recommended)**
 ```
 iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT
 iptables -A INPUT -p udp -m multiport --dports 7777:7786,27015:27019 -j ACCEPT
 ```
-### Long version ###
+**Long version**
 ```
 iptables -A INPUT -p tcp --dport 7777:7786 -j ACCEPT
 iptables -A INPUT -p udp --dport 7777:7786 -j ACCEPT
@@ -91,6 +89,7 @@ iptables -A INPUT -p tcp --dport 27015:27019 -j ACCEPT
 iptables -A INPUT -p udp --dport 27015:27019 -j ACCEPT
 iptables -A INPUT -p tcp --dport 32330:32335 -j ACCEPT
 ```
+
 ## Install the ARK Server-Tools and steamcmd (required for ARK servers) ##
 Download and install ARK Server-Tools:
 ```
@@ -142,7 +141,7 @@ arkflag_NoBattleEye=true
 ```
 Save and exit vim (press `ESC` &rarr; `:wq`).
 
-### Configure the default instance ###
+## Configure the default instance ##
 Switch to the instances folder:
 ```
 cd /etc/arkmanager/instances/
@@ -236,7 +235,9 @@ The command (`crontab -e`) should display:
 
 ## :thumbsup: DONE ~ HAVE FUN :thumbsup: ##
 
-# Important arkmanager commands #
+---
+
+## Important arkmanager commands ##
 Commands for `@all` instances:
 ```
 arkmanager start @all // Start all instances
@@ -254,6 +255,8 @@ arkmanager restart @theisland // Restart the specified instance
 arkmanager update @theisland // Check the specified instance for updates and install updates if available
 arkmanager status @theisland // Check the online status of the specified instance
 ```
+
+---
 
 ## TODO ##
 - [x] Add tutorial README.md
