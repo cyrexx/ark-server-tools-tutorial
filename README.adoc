@@ -39,7 +39,7 @@ In the first step, we install all required packages to run a full fledged ARK-Se
 
 `su` :: Switch to root user.
 `apt-get update && apt-get upgrade` :: Update package repository and system packages.
-`apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop` :: Install all required packages.
+`apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop` :: Install all required packages to run ARK Server-Tools and steamcmd.
 
 ---
 
