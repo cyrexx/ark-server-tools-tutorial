@@ -68,54 +68,28 @@ session required pam_limits.so
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 ## 5. Open firewall ports ##
-**Short version (recommended)**
-```
-iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT
-iptables -A INPUT -p udp -m multiport --dports 7777:7786,27015:27019 -j ACCEPT
-```
-**Long version**
-```
-iptables -A INPUT -p tcp --dport 7777:7786 -j ACCEPT
-iptables -A INPUT -p udp --dport 7777:7786 -j ACCEPT
-iptables -A INPUT -p tcp --dport 27015:27019 -j ACCEPT
-iptables -A INPUT -p udp --dport 27015:27019 -j ACCEPT
-iptables -A INPUT -p tcp --dport 32330:32335 -j ACCEPT
-```
+`iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT`
+
+`iptables -A INPUT -p udp -m multiport --dports 7777:7786,27015:27019 -j ACCEPT`
 
 ## 6. Install ARK Server-Tools and steamcmd (required for ARK servers) ##
-Download and install ARK Server-Tools:
-```
-curl -sL http://git.io/vtf5N | bash -s ARK_SERVER_USERNAME --me
-```
-Switch to the ARK-Server user:
-```
-su ARK_SERVER_USERNAME
-```
-Go to home directory:
-```
-cd ~
-```
-Create the steamcmd folder:
-```
-mkdir steamcmd
-```
-Switch to steamcmd folder:
-```
-cd steamcmd
-```
-Download and extract steamcmd:
-```
-curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
-```
-While still in steamcmd directory, install arkmanager:
-```
-arkmanager install
-```
-Install steamcmd:
-```
-cd /home/ARK_SERVER_USERNAME/ARK/
-./SteamCMDInstall.sh
-```
+`curl -sL http://git.io/vtf5N | bash -s ARK_SERVER_USERNAME --me` :: Download and install ARK Server-Tools (change **ARK_SERVER_USERNAME**).
+
+`su ARK_SERVER_USERNAME` :: Switch to the ARK-Server user (change **ARK_SERVER_USERNAME**).
+
+`cd ~` :: Go to home directory.
+
+`mkdir steamcmd` :: Create the steamcmd folder.
+
+`cd steamcmd ` :: Switch to steamcmd folder.
+
+`curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -` :: Download and extract steamcmd.
+
+`arkmanager install` :: While still in steamcmd directory, install arkmanager.
+
+`cd /home/ARK_SERVER_USERNAME/ARK/` :: Go to ARK-Server user home/ARK directory.
+
+`./SteamCMDInstall.sh` :: Install steamcmd.
 
 ## 7. Configure arkmanager and ARK-Server instances ##
 Switch back to root user:
