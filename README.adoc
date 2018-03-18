@@ -236,3 +236,6 @@ The command (`crontab -e`) should display:
 - [x] Add tutorial README.md
 - [ ] Add config files and demo configs
 - [ ] Test tutorial with sudo access rights
+- [ ] Add more text to headlines
+- [ ] Add links to sources and wikis
+- [ ] Collect feedback
