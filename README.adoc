@@ -68,9 +68,8 @@ session required pam_limits.so
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 ## 5. Open firewall ports ##
-`iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT`
-
-`iptables -A INPUT -p udp -m multiport --dports 7777:7786,27015:27019 -j ACCEPT`
+`iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT` :: Configure TCP ports.
+`iptables -A INPUT -p udp -m multiport --dports 7777:7786,27015:27019 -j ACCEPT` :: Configure UDP ports.
 
 ## 6. Install ARK Server-Tools and steamcmd (required for ARK servers) ##
 `curl -sL http://git.io/vtf5N | bash -s ARK_SERVER_USERNAME --me` :: Download and install ARK Server-Tools (change **ARK_SERVER_USERNAME**).
@@ -81,7 +80,7 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 `mkdir steamcmd` :: Create the steamcmd folder.
 
-`cd steamcmd ` :: Switch to steamcmd folder.
+`cd steamcmd` :: Go to to steamcmd folder.
 
 `curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -` :: Download and extract steamcmd.
 
