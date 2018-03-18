@@ -177,11 +177,18 @@ The command (`crontab -e`) should display:
 `arkmanager update @theisland` :: Check the specified instance for updates and install updates if available.
 `arkmanager status @theisland` :: Check the online status of the specified instance.
 
-(available instances: **@theisland**, **@thecenter**, **@ragnarok**, **@scorchedearth**, **@aberration**)
+### 12.3 Available instances ###
+
+* @theisland
+* @thecenter
+* @ragnarok
+* @scorchedearth
+* @aberration**)
 
 ---
 
 ## 13. TODO ##
+
 - [x] Add tutorial README.md
 - [ ] Add config files and demo configs
 - [ ] Test tutorial with sudo access rights
