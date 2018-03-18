@@ -42,9 +42,9 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 
 ## 4. Configure and prepare Linux system ##
 `vim /etc/sysctl.conf` :: Edit the _sysctl.conf_ file. Add the following line at the very end - if not already present (press `i` for edit mode):
-```
-fs.file-max=100000
-```
+
+> fs.file-max=100000
+
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 ---
