@@ -236,9 +236,23 @@ This is the location of the two most important ARK-Server files, _LinuxGame.ini_
 `vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Config/Linux/LinuxGame.ini` :: Path to (edit) _LinuxGame.ini_ (change **ARK_SERVER_USERNAME**).
 `vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini` :: Path to (edit) _GameUserSettings.ini_ (change **ARK_SERVER_USERNAME**).
 
+## Install Mods ##
+
+Set the Mod Ids in the _arkmanager.cfg_ and run the _installmods_ command.
+
+`arkmanager stop @all` :: Stop all instances to install Mods.
+`vim /etc/arkmanager/arkmanager.cfg` :: Adjust the config file and change following content, specify additional mods by Mod Id separated by commas:
+```
+ark_GameModIds="731604991" 
+```
+`arkmanager installmods` :: Install the Mod(s) via arkmanager.
+`arkmanager installmods @all` :: Install the Mod(s) via arkmanager, if server directories are seperate, not applicable for this tutorial.
+`arkmanager update --update-mods` :: Update Mod(s)
+`arkmanager start @all` :: Start all instances.
+
 ---
 
-## 13. TODO ##
+## 14. TODO ##
 
 - [x] Add tutorial README.adoc
 - [ ] Add config files and demo configs
