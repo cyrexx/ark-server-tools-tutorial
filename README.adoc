@@ -183,7 +183,7 @@ The command (`crontab -e`) should display:
 * @thecenter
 * @ragnarok
 * @scorchedearth
-* @aberration**)
+* @aberration
 
 ---
 
