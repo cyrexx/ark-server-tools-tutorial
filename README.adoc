@@ -35,6 +35,8 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 
 ## 3. Install required packages and add ARK-Server user ##
 
+In the first step, we install all required packages to run a full fledges ARK-Server. To manage the server, we add a new user to the system called _ARK_SERVER_USERNAME_. Please change this name in every step according to your setup.
+
 `su` :: Switch to root user.
 `apt-get update && apt-get upgrade` :: Update package repository and system packages.
 `apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop` :: Install all required packages.
