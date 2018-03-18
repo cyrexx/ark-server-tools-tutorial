@@ -51,9 +51,9 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 `vim /etc/security/limits.conf` :: Edit the _limits.conf_ file. Add following line above _# End of file_ - if not already present (press `i` for edit mode):
 
-> `* soft nofile 100000`
+> \* soft nofile 100000
 
-> `* hard nofile 100000`
+> \* hard nofile 100000
 
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
