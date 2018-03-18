@@ -95,9 +95,9 @@ Configure _iptables_ system firewall.
 
 ---
 
-## 6. Install ARK Server-Tools and steamcmd (required for ARK servers) ##
+## 6. Install ARK Server-Tools and steamcmd ##
 
-In this step we install the ARK Server-Tools and the steam command line tool steamcmd. Both are required to manager our ARK server instances efficiently.
+In this step we install the ARK Server-Tools and the steam command line tool steamcmd. Both are required to manager our ARK server instances efficiently and to keep all instances up-to-date.
 
 `curl -sL http://git.io/vtf5N | bash -s ARK_SERVER_USERNAME --me` :: Download and install ARK Server-Tools (change **ARK_SERVER_USERNAME**).
 
