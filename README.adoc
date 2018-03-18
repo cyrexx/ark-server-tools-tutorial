@@ -231,10 +231,10 @@ The command (`crontab -e`) should display:
 
 ### 12.4 LinuxGame.ini and GameUserSettings.ini ###
 
-This is the location of the two most important ARK-Server files.
+This is the location of the two most important ARK-Server files, _LinuxGame.ini_ (often reffered to as Game.ini) and _GameUserSettings.ini_ (often reffered to as GUS.ini).
 
-`vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Config/Linux/LinuxGame.ini` :: Path to (edit) LinuxGame.ini (change **ARK_SERVER_USERNAME**).
-`vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini` :: Path to (edit) GameUserSettings.ini (change **ARK_SERVER_USERNAME**).
+`vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Config/Linux/LinuxGame.ini` :: Path to (edit) _LinuxGame.ini_ (change **ARK_SERVER_USERNAME**).
+`vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini` :: Path to (edit) _GameUserSettings.ini_ (change **ARK_SERVER_USERNAME**).
 
 ---
 
