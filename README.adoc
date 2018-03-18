@@ -17,14 +17,13 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 ---
 
 ## 2. Important notice ##
-**_Please change these values according to your setup:_**
+
+### 2.1 Please change these values according to your setup ###
 
 * **ARK-Server username:** `ARK_SERVER_USERNAME`
 * **ARK-Cluster ID:** `ARK_CLUSTER_ID`
 
----
-
-**This tutorial will setup following server instances:**
+### 2.2 This tutorial will setup following server instances ###
 
 * **Map:** TheIsland - **Instance:** theisland.cfg - **Ports:** 7777,7778,27015,32330
 * **Map:** TheCenter - **Instance:** thecenter.cfg - **Ports:** 7779,7780,27016,32331
@@ -35,6 +34,7 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 ---
 
 ## 3. Install required packages and add ARK-Server user ##
+
 `su` :: Switch to root user.
 `apt-get update && apt-get upgrade` :: Update package repository and system packages.
 `apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop` :: Install all required packages.
@@ -47,6 +47,7 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 ---
 
 ## 4. Configure and prepare Linux system ##
+
 `vim /etc/sysctl.conf` :: Edit the _sysctl.conf_ file. Add the following line at the very end - if not already present (press `i` for edit mode):
 ```
 fs.file-max=100000
@@ -73,6 +74,7 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 ---
 
 ## 5. Open firewall ports ##
+
 Configure _iptables_ system firewall.
 
 `iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT` :: Configure TCP ports.
@@ -81,6 +83,7 @@ Configure _iptables_ system firewall.
 ---
 
 ## 6. Install ARK Server-Tools and steamcmd (required for ARK servers) ##
+
 `curl -sL http://git.io/vtf5N | bash -s ARK_SERVER_USERNAME --me` :: Download and install ARK Server-Tools (change **ARK_SERVER_USERNAME**).
 
 `su ARK_SERVER_USERNAME` :: Switch to the ARK-Server user (change **ARK_SERVER_USERNAME**).
@@ -102,6 +105,7 @@ Configure _iptables_ system firewall.
 ---
 
 ## 7. Configure arkmanager and ARK-Server instances ##
+
 `exit` :: Switch back to root user.
 `vim /etc/arkmanager/arkmanager.cfg` :: Configure arkmanager. Add flags, options and more (press `i` for edit mode):
 ```
@@ -113,6 +117,7 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 ---
 
 ## 8. Configure default instance ##
+
 `cd /etc/arkmanager/instances/` :: Switch to arkmanager instances folder.
 `cp main.cfg NEW_SERVER_INSTANCE.cfg` :: Copy `main.cfg` (with default settings) to your new instance.
 `vim NEW_SERVER_INSTANCE.cfg` :: Edit your new config. Add flags, options and more (press `i` for edit mode):
@@ -125,6 +130,7 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 ---
 
 ## 9. Install mods ##
+
 `su ARK_SERVER_USERNAME` :: Switch to ARK-Server user (change **ARK_SERVER_USERNAME**).
 `arkmanager installmods` :: Install the mods
 `arkmanager start` :: Start the ARK-Sever
@@ -132,6 +138,7 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 ---
 
 ## 10. Configure autorestart on servercrash ##
+
 `sudo vim ~/ARK/ShooterGame/Binaries/ark-watchdog` :: Create the file _ark-watchdog_. Enter following script (press `i` for edit mode):
 ```
 #!/bin/bash
@@ -161,10 +168,12 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 ---
 
 ## 11. Create a cronjob to check for updates every hour ##
+
 `su` :: Switch to root user.
 `arkmanager install-cronjob --hourly update @all --saveworld --warn --update-mods` :: Install the arkmanager cronjob.
 
 ### 11.1 Check if cronjob added successfully ###
+
 `exit` :: Switch back to ARK-Server user.
 `crontab -e` :: Show all cronjobs for ark and check if ark update cronjob added successfully.
 
