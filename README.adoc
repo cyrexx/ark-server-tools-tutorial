@@ -203,7 +203,7 @@ The command (`crontab -e`) should display:
 
 ---
 
-## 12. Important arkmanager commands ##
+## 12. Useful commands, files and links ##
 
 ### 12.1 Commands for _@all_ instances ###
 
@@ -228,6 +228,11 @@ The command (`crontab -e`) should display:
 * @ragnarok
 * @scorchedearth
 * @aberration
+
+### 12.4 Game.ini and GameUserSettings.ini ###
+
+`vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Config/Linux/LinuxGame.ini` :: Path to / Edit LinuxGame.ini (change **ARK_SERVER_USERNAME**).
+`vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini` :: Path to / Edit GameUserSettings.ini (change **ARK_SERVER_USERNAME**).
 
 ---
 
