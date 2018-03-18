@@ -43,7 +43,7 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 ## 4. Configure and prepare Linux system ##
 `vim /etc/sysctl.conf` :: Edit the _sysctl.conf_ file. Add the following line at the very end - if not already present (press `i` for edit mode):
 
-> fs.file-max=100000
+> `fs.file-max=100000`
 
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
@@ -51,8 +51,8 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 `vim /etc/security/limits.conf` :: Edit the _limits.conf_ file. Add following line above _# End of file_ - if not already present (press `i` for edit mode):
 
-> * soft nofile 100000
-> * hard nofile 100000
+> `* soft nofile 100000`
+> `* hard nofile 100000`
 
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
@@ -60,7 +60,7 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 `vim /etc/pam.d/common-session` :: Edit the _common-session_ file. Add following line above _# end of pam-auth-update config_ - if not already present (press `i` for edit mode):
 
-> session required pam_limits.so
+> `session required pam_limits.so`
 
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
