@@ -32,15 +32,12 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 
 ## 3. Install required packages and add ARK-Server user ##
 `su` :: Switch to root user.
-
 `apt-get update && apt-get upgrade` :: Update package repository and system packages.
-
 `apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop` :: Install all required packages.
 
 ---
 
 `adduser ARK_SERVER_USERNAME` :: Add ARK-Server user (change **ARK_SERVER_USERNAME**), choose a strong password, other fields can be left blank.
-
 `adduser ARK_SERVER_USERNAME sudo` :: Add the ARK-Server user to the sudo group.
 
 ## 4. Configure and prepare Linux system ##
@@ -68,6 +65,8 @@ session required pam_limits.so
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 ## 5. Open firewall ports ##
+Configure _iptables_ system firewall.
+
 `iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT` :: Configure TCP ports.
 `iptables -A INPUT -p udp -m multiport --dports 7777:7786,27015:27019 -j ACCEPT` :: Configure UDP ports.
 
