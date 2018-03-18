@@ -161,7 +161,7 @@ The command (`crontab -e`) should display:
 
 ## 12. Important arkmanager commands ##
 
-Commands for _@all_ instances:
+**Commands for _@all_ instances:**
 
 `arkmanager start @all` :: Start all instances.
 `arkmanager stop @all` :: Stop all instances.
@@ -169,7 +169,7 @@ Commands for _@all_ instances:
 `arkmanager update @all` :: Check all instances for updates and install updates if available.
 `arkmanager status @all` :: Check the online status of all instances.
 
-Commands for a _@single_ instance:
+**Commands for a _@single_ instance:**
 
 `arkmanager start @theisland` :: Start the specified instance.
 `arkmanager stop @theisland` :: Stop the specified instance.
