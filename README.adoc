@@ -85,7 +85,12 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 Configure _iptables_ system firewall.
 
+### 5.1 TCP ###
+
 `iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT` :: Configure TCP ports.
+
+### 5.2 UDP ###
+
 `iptables -A INPUT -p udp -m multiport --dports 7777:7786,27015:27019 -j ACCEPT` :: Configure UDP ports.
 
 ---
