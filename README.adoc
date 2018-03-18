@@ -246,7 +246,7 @@ Set the Mod Ids in the _arkmanager.cfg_ and run the _installmods_ command.
 ark_GameModIds="731604991" 
 ```
 `arkmanager installmods` :: Install the Mod(s) via arkmanager.
-`arkmanager installmods @all` :: Install the Mod(s) via arkmanager, if server directories are seperate, not applicable for this tutorial.
+`arkmanager installmods @all` :: Install the Mod(s) via arkmanager, if server directories are seperate (not applicable for this tutorial).
 `arkmanager update --update-mods` :: Update Mod(s)
 `arkmanager start @all` :: Start all instances.
 
