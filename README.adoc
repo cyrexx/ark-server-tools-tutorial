@@ -236,7 +236,7 @@ This is the location of the two most important ARK-Server files, _LinuxGame.ini_
 `vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Config/Linux/LinuxGame.ini` :: Path to (edit) _LinuxGame.ini_ (change **ARK_SERVER_USERNAME**).
 `vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini` :: Path to (edit) _GameUserSettings.ini_ (change **ARK_SERVER_USERNAME**).
 
-## Install Mods ##
+## 13. Install Mods ##
 
 Set the Mod Ids in the _arkmanager.cfg_ and run the _installmods_ command.
 
