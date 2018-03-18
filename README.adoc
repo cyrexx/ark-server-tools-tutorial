@@ -239,3 +239,4 @@ The command (`crontab -e`) should display:
 - [ ] Add more text to headlines
 - [ ] Add links to sources and wikis
 - [ ] Collect feedback
+- [ ] Add steps to create config files for all instances with demo config options
