@@ -233,7 +233,7 @@ The command (`crontab -e`) should display:
 
 ## 13. TODO ##
 
-- [x] Add tutorial README.md
+- [x] Add tutorial README.adoc
 - [ ] Add config files and demo configs
 - [ ] Test tutorial with sudo access rights
 - [ ] Add more text to headlines
