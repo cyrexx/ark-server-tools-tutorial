@@ -113,7 +113,7 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 `arkmanager installmods` :: Install the mods
 `arkmanager start` :: Start the ARK-Sever
 
-## 10 Configure autorestart on servercrash ##
+## 10. Configure autorestart on servercrash ##
 `sudo vim ~/ARK/ShooterGame/Binaries/ark-watchdog` :: Create the file _ark-watchdog_. Enter following script (press `i` for edit mode):
 ```
 #!/bin/bash
@@ -144,7 +144,7 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 `su` :: Switch to root user.
 `arkmanager install-cronjob --hourly update @all --saveworld --warn --update-mods` :: Install the arkmanager cronjob.
 
-### 11.1 Check if cronjob added successfully
+### 11.1 Check if cronjob added successfully ###
 `exit` :: Switch back to ARK-Server user.
 `crontab -e` :: Show all cronjobs for ark and check if ark update cronjob added successfully.
 
@@ -161,7 +161,7 @@ The command (`crontab -e`) should display:
 
 ## 12. Important arkmanager commands ##
 
-#### 12.1 Commands for _@all_ instances ####
+### 12.1 Commands for _@all_ instances ###
 
 `arkmanager start @all` :: Start all instances.
 `arkmanager stop @all` :: Stop all instances.
@@ -169,7 +169,7 @@ The command (`crontab -e`) should display:
 `arkmanager update @all` :: Check all instances for updates and install updates if available.
 `arkmanager status @all` :: Check the online status of all instances.
 
-#### 12.2 Commands for a _@single_ instance #### 
+### 12.2 Commands for a _@single_ instance ###
 
 `arkmanager start @theisland` :: Start the specified instance.
 `arkmanager stop @theisland` :: Stop the specified instance.
