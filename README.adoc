@@ -183,6 +183,19 @@ Create hardlinks to all serverfiles for all instances (to save up disk space).
 
 `rm -r ARK/` :: Remove no longer required server files.
 
+Remove old files and create new SavedArks folders.
+
+`rm -r ARK-Servers/TheIsland/ShooterGame/Save/SavedArks/*` :: Remove the old SavedArks folder.
+`mkdir ARK-Servers/TheIsland/ShooterGame/Save/SavedArks/TheIsland` :: Create the new SavedArks folder.
+`rm -r ARK-Servers/TheCenter/ShooterGame/Save/SavedArks/*` :: Remove the old SavedArks folder.
+`mkdir ARK-Servers/TheCenter/ShooterGame/Save/SavedArks/TheCenter` :: Create the new SavedArks folder.
+`rm -r ARK-Servers/ScorchedEarth/ShooterGame/Save/SavedArks/*` :: Remove the old SavedArks folder.
+`mkdir ARK-Servers/ScorchedEarth/ShooterGame/Save/SavedArks/ScorchedEarth` :: Create the new SavedArks folder.
+`rm -r ARK-Servers/Ragnarok/ShooterGame/Save/SavedArks/*` :: Remove the old SavedArks folder.
+`mkdir ARK-Servers/Ragnarok/ShooterGame/Save/SavedArks/Ragnarok` :: Create the new SavedArks folder.
+`rm -r ARK-Servers/Aberration/ShooterGame/Save/SavedArks/*` :: Remove the old SavedArks folder.
+`mkdir ARK-Servers/Aberration/ShooterGame/Save/SavedArks/Aberration` :: Create the new SavedArks folder.
+
 Create ARK Server backups folder.
 
 `mkdir ARK-Backups` :: Create the backup folder.
@@ -461,7 +474,41 @@ This is the location of the two most important ARK-Server files, _LinuxGame.ini_
 
 ---
 
-## 12. TODO ##
+## 12. Create future servers with new maps.
+
+`su ark` :: Switch to ARK-Server user [red yellow-background]#(change username if applicable)#.
+`cd` :: Switch to ARK-Server user home directory.
+`mkdir ARK-Servers/NewServer` :: Create the new server folder.
+`cp -al ARK-Servers/TheIsland/* ARK-Servers/NewServer/` :: Copy the server files.
+`mkdir ARK-Backups/NewServer` :: Create the new backup folder.
+`mkdir ARK-Servers/NewServer/ShooterGame/Save/SavedArks/NewServer` :: Create the new SavedArks folder.
+`rm -r ARK-Servers/NewServer/ShooterGame/Save/SavedArks/TheIsland` :: Remove the old SavedArks folder.
+
+`cd /etc/arkmanager/instances/` :: Switch to arkmanager instances folder.
+`cp /etc/arkmanager/instances/theisland.cfg /etc/arkmanager/instances/newserver.cfg` :: Create a new instance.
+`vim /etc/arkmanager/instances/newserver.cfg` :: Edit instance options.
+
+What to change?
+
+```
+arkserverroot="/home/ark/ARK-Servers/NewServer" # Ark server root.
+serverMap="NewMap"                              # The new map.
+arkbackupdir="/home/ark/ARK-Backups/NewServer"  # Set backup directory.
+ark_RCONPort="32335"                            # Set to an unused port number.
+ark_SessionName="ARK Server - NewServer"        # Set ARK session name.
+ark_Port="7788"                                 # Set to an unused port number.
+ark_QueryPort="27020"                           # Set to an unused port number.
+ark_AltSaveDirectoryName="SavedArks/NewServer"  # Set the new save directory.
+ark_ServerAdminPassword="newserverpassword"     # Set admin passwort.
+```
+
+`arkmanager start @newserver` :: Start the new server.
+
+The new server will automatically join the existing cluster.
+
+---
+
+## 13. TODO ##
 
 - [x] Add tutorial README.adoc
 - [ ] Add config files and demo configs
