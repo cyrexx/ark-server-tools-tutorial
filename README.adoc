@@ -3,16 +3,29 @@
 :toclevels: 99
 
 # ARK Server-Tools Tutorial
-**ARK Server-Tools for Linux - Installation of multiple ark server instances in a crossark travel cluster.**
+
+**Installation of multiple ark server instances in a crossark travel cluster.**
 
 In this tutorial you will learn how to setup and manage multiple ark servers with enabled crossark travel.
+
+This Tutorial will cover:
+
+* Linux System preparation
+* ARK Server installation
+* Instance configuration
+* Cluster-Setup
+* Mod installation
+* Monitoring all servers for updates
+* Monitoring all server processes (auto restart on failure)
+
+**_(last document review: 2018/04/09)_**
 
 toc::[]
 
 ## 1. System Setup ##
 **Operating System:** Debian 8 or derivates like Ubuntu, with sudo installed and root access.
 
-The installation may work with sudo access rights, but I haven't tested it yet. Just put a `sudo` in front of every root command if you don't have root access (e.g. `sudo apt-get update && sudo apt-get upgrade`).
+If you don't have access to the root account, the installation works with sudo access rights. Just put a `sudo` in front of every root command (e.g. `sudo apt-get update && sudo apt-get upgrade`).
 
 ---
 
@@ -20,8 +33,8 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 
 ### 2.1 Please change these values according to your setup ###
 
-* **ARK-Server username:** `ARK_SERVER_USERNAME`
-* **ARK-Cluster ID:** `ARK_CLUSTER_ID`
+* **ARK-Server username:** [red yellow-background]*ark*
+* **ARK-Cluster ID:** [red yellow-background]*arkcluster*
 
 ### 2.2 This tutorial will setup following server instances ###
 
@@ -35,16 +48,16 @@ The installation may work with sudo access rights, but I haven't tested it yet. 
 
 ## 3. Install required packages and add ARK-Server user ##
 
-In the first step, we install all required packages to run a full fledged ARK-Server. To manage the server, we add a new sudo user to the system called _ARK_SERVER_USERNAME_. Please **change this name** in every step according to your setup.
+In the first step, we install all required packages to run a full featured ARK-Server. To manage the server, we add a new sudo user to the system called _ARK_SERVER_USERNAME_. Please **change this name** in every step according to your setup.
 
-`su` :: Switch to root user.
+`su` :: Switch to root user or user with sudo privileges.
 `apt-get update && apt-get upgrade` :: Update package repository and system packages.
 `apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop` :: Install all required packages to run ARK Server-Tools and steamcmd.
 
 ---
 
-`adduser ARK_SERVER_USERNAME` :: Add ARK-Server user (change **ARK_SERVER_USERNAME**), choose a strong password, other fields can be left blank.
-`adduser ARK_SERVER_USERNAME sudo` :: Add the ARK-Server user to the sudo group.
+`adduser ark` :: Add ARK-Server user [red yellow-background]#(change username if applicable)#, choose a strong password, other fields can be left blank.
+`adduser ark sudo` :: Add the ARK-Server user to the sudo group [red yellow-background]#(change username if applicable)#.
 
 ---
 
@@ -97,13 +110,13 @@ Configure _iptables_ system firewall.
 
 ## 6. Install ARK Server-Tools and steamcmd ##
 
-In this step we install the ARK Server-Tools and the steam command line tool steamcmd. Both are required to manage our ARK server instances efficiently and keep all instances up-to-date.
+In this step we install the ARK Server-Tools and the steam command line tool steamcmd. Both are required to run and manage our ARK server instances efficiently and to keep all instances up-to-date.
 
-`curl -sL http://git.io/vtf5N | bash -s ARK_SERVER_USERNAME --me` :: Download and install ARK Server-Tools (change **ARK_SERVER_USERNAME**).
+`curl -sL http://git.io/vtf5N | bash -s ark --me` :: Download and install ARK Server-Tools [red yellow-background]#(change username if applicable)#.
 
-`su ARK_SERVER_USERNAME` :: Switch to the ARK-Server user (change **ARK_SERVER_USERNAME**).
+`su ark` :: Switch to the ARK-Server user [red yellow-background]#(change username if applicable)#.
 
-`cd ~` :: Go to home directory.
+`cd` :: Go to home directory.
 
 `mkdir steamcmd` :: Create the steamcmd folder.
 
@@ -113,7 +126,7 @@ In this step we install the ARK Server-Tools and the steam command line tool ste
 
 `arkmanager install` :: While still in steamcmd directory, install arkmanager.
 
-`cd /home/ARK_SERVER_USERNAME/ARK/` :: Go to ARK-Server user home/ARK directory (change **ARK_SERVER_USERNAME**).
+`cd /home/ark/ARK/` :: Go to ARK-Server user home/ARK directory [red yellow-background]#(change username if applicable)#.
 
 `./SteamCMDInstall.sh` :: Install steamcmd.
 
@@ -121,21 +134,22 @@ In this step we install the ARK Server-Tools and the steam command line tool ste
 
 ## 7. Configure arkmanager and ARK-Server instances ##
 
-`exit` :: Switch back to root user.
-`vim /etc/arkmanager/arkmanager.cfg` :: Configure arkmanager. Add flags, options and more (press `i` for edit mode):
+`sudo vim /etc/arkmanager/arkmanager.cfg` :: Configure arkmanager. Add flags, options and more (press `i` for edit mode):
 ```
 arkflag_log=true
 arkflag_NoBattleEye=true
 ```
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
+See example configuration in 
+
 ---
 
 ## 8. Configure default instance ##
 
 `cd /etc/arkmanager/instances/` :: Switch to arkmanager instances folder.
-`cp main.cfg NEW_SERVER_INSTANCE.cfg` :: Copy `main.cfg` (with default settings) to your new instance.
-`vim NEW_SERVER_INSTANCE.cfg` :: Edit your new config. Add flags, options and more (press `i` for edit mode):
+`sudo cp main.cfg NEW_SERVER_INSTANCE.cfg` :: Copy `main.cfg` (with default settings) to your new instance.
+`sudo vim NEW_SERVER_INSTANCE.cfg` :: Edit your new config. Add flags, options and more (press `i` for edit mode):
 ```
 arkflag_log=true
 arkflag_NoBattleEye=true
@@ -146,98 +160,6 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 ## 9. Install mods ##
 
-`su ARK_SERVER_USERNAME` :: Switch to ARK-Server user (change **ARK_SERVER_USERNAME**).
-`arkmanager installmods` :: Install the mods
-`arkmanager start` :: Start the ARK-Sever
-
----
-
-## 10. Configure autorestart on servercrash ##
-
-`sudo vim ~/ARK/ShooterGame/Binaries/ark-watchdog` :: Create the file _ark-watchdog_. Enter following script (press `i` for edit mode):
-```
-#!/bin/bash
-while true
-do
-if [ ! `pgrep ShooterGameServer` ] ; then
-/usr/bin/ark-restart.sh
-fi
-sleep 30
-done
-```
-_Save and exit vim (press `ESC` &rarr; `:wq`)._
-
----
-
-`sudo vim ~/ARK/ShooterGame/Binaries/ark-restart.sh` :: Create the file _ark-restart.sh_. Enter following script (press `i` for edit mode):
-```
-cd /usr/local/bin
-./arkmanager restart
-```
-_Save and exit vim (press `ESC` &rarr; `:wq`)._
-
----
-
-`sudo ln -s /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Binaries/ark-restart.sh /usr/bin/` :: Create a symlink to _ark-restart.sh_.
-
----
-
-## 11. Create a cronjob to check for updates every hour ##
-
-`su` :: Switch to root user.
-`arkmanager install-cronjob --hourly update @all --saveworld --warn --update-mods` :: Install the arkmanager cronjob.
-
-### 11.1 Check if cronjob added successfully ###
-
-`exit` :: Switch back to ARK-Server user.
-`crontab -e` :: Show all cronjobs for ark and check if ark update cronjob added successfully.
-
-The command (`crontab -e`) should display:
-```
-0 * * * * /usr/local/bin/arkmanager --cronjob update @all  --saveworld --warn --update-mods --args  -- >/dev/null 2>&1
-```
-
----
-
-**DONE ~ HAVE FUN**
-
----
-
-## 12. Useful commands, files and links ##
-
-### 12.1 Commands for _@all_ instances ###
-
-`arkmanager start @all` :: Start all instances.
-`arkmanager stop @all` :: Stop all instances.
-`arkmanager restart @all` :: ReStart all instances.
-`arkmanager update @all` :: Check all instances for updates and install updates if available.
-`arkmanager status @all` :: Check the online status of all instances.
-
-### 12.2 Commands for a _@single_ instance ###
-
-`arkmanager start @theisland` :: Start the specified instance.
-`arkmanager stop @theisland` :: Stop the specified instance.
-`arkmanager restart @theisland` :: Restart the specified instance.
-`arkmanager update @theisland` :: Check the specified instance for updates and install updates if available.
-`arkmanager status @theisland` :: Check the online status of the specified instance.
-
-### 12.3 Available instances ###
-
-* @theisland
-* @thecenter
-* @ragnarok
-* @scorchedearth
-* @aberration
-
-### 12.4 LinuxGame.ini and GameUserSettings.ini ###
-
-This is the location of the two most important ARK-Server files, _LinuxGame.ini_ (often reffered to as Game.ini) and _GameUserSettings.ini_ (often reffered to as GUS.ini).
-
-`vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Config/Linux/LinuxGame.ini` :: Path to (edit) _LinuxGame.ini_ (change **ARK_SERVER_USERNAME**).
-`vim /home/ARK_SERVER_USERNAME/ARK/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini` :: Path to (edit) _GameUserSettings.ini_ (change **ARK_SERVER_USERNAME**).
-
-## 13. Install Mods ##
-
 Set the Mod Ids in the _arkmanager.cfg_ and run the _installmods_ command.
 
 `arkmanager stop @all` :: Stop all instances to install Mods.
@@ -245,14 +167,126 @@ Set the Mod Ids in the _arkmanager.cfg_ and run the _installmods_ command.
 ```
 ark_GameModIds="731604991" 
 ```
-`arkmanager installmods` :: Install the Mod(s) via arkmanager.
-`arkmanager installmods @all` :: Install the Mod(s) via arkmanager, if server directories are seperate (not applicable for this tutorial).
+`arkmanager installmods @all` :: Install the Mod(s) via arkmanager.
 `arkmanager update --update-mods` :: Update Mod(s)
 `arkmanager start @all` :: Start all instances.
 
 ---
 
-## 14. TODO ##
+## 10. Monitoring
+
+### 10.1 Server updates
+
+Monitoring all servers for updates. Create a cronjob to check for updates every hour.
+
+`arkmanager install-cronjob --hourly update @all --saveworld --warn --update-mods` :: Install the arkmanager cronjob.
+
+`crontab -e` :: Show all cronjobs for ark and check if ark update cronjob added successfully.
+
+The command (`crontab -l`) should display:
+```
+0 * * * * /usr/local/bin/arkmanager --cronjob update @all  --saveworld --warn --update-mods --args  -- >/dev/null 2>&1
+```
+
+---
+
+### 10.2 Restart server on failure
+
+Monitoring all server processes and restart on failure.
+
+`cd` :: Go to ARK-Server user home directory.
+
+`whereis arkmanager` :: Check if arkmanager is in `/usr/local/bin`, if not, adjust the path to arkmanager in the script (next step).
+
+`vim ark-watchdog` :: Create the shell script (Note: do not use file extensions like .sh, because it's Debian policy to have scripts in packages that will be placed in one of the bin folders to not have extensions). Enter following script:
+
+```
+#!/bin/bash
+
+if [ ! `pgrep -f Port=7777` ] ; then
+/usr/local/bin/arkmanager restart @theisland
+fi
+if [ ! `pgrep -f Port=7779` ] ; then
+/usr/local/bin/arkmanager restart @thecenter
+fi
+if [ ! `pgrep -f Port=7781` ] ; then
+/usr/local/bin/arkmanager restart @ragnarok
+fi
+if [ ! `pgrep -f Port=7783` ] ; then
+/usr/local/bin/arkmanager restart @scorchedearth
+fi
+if [ ! `pgrep -f Port=7785` ] ; then
+/usr/local/bin/arkmanager restart @aberration
+fi
+```
+_Save and exit vim (press `ESC` &rarr; `:wq`)._
+
+The script checks if the specified regular expression (e.g. Port=7777) matches with parts of the command line argument of a running process. If no process command line argument matches the given text, it will restart the affected server instance. You can change the regular expression (regex) to use server names or any other server unique text from the command line argument. E.g. `pgrep -f TheIsland` or `pgrep -f "ShooterGameServer TheCenter"`. But because it is pretty unlikely to have a second process with the same port-text in the process name or arguments, I like to use to the Port number of the server to check if a particular process is running.
+
+`ps axuwww` :: Show full command the server was started with. The desired output looks like (example):
+
+```
+...
+/home/ark/ARK-Servers/TheIsland/ShooterGame/Binaries/Linux/ShooterGameServer TheIsland?RCONEnabled=True?RCONPort=32330?SessionName=ARK Server - TheIsland?Port=7777?QueryPort=27015?ServerPassword=123?ServerAdminPassword=123?MaxPlayers=50?AltSaveDirectoryName=SavedArks/TheIsland?DifficultyOffset=1.000000?HarvestAmountMultiplier=1.2?ServerPVE=False?AllowFlyingStaminaRecovery=True?bRawSockets?AllowAnyoneBabyImprintCuddle=True?DisableWeatherFog=True?GameModIds=731604991?listen -clusterid=pvearkcluster -ClusterDirOverride=/home/ark/ARK-Cluster/clusterdata -NoTransferFromFiltering -noantispeedhack
+...
+```
+
+`chmod u+x ark-watchdog` :: Make the script executable.
+
+`sudo ln -s /home/ark/ark-watchdog /usr/bin/` :: Link watchdog script to the bin folder [red yellow-background]#(change username if applicable)#.
+
+`crontab -l | { cat; echo "*/10 * * * * /home/ark/ark-watchdog"; } | crontab -` :: Add watchdog cron job and check servers every 10 minutes [red yellow-background]#(change username if applicable)#. Check out https://crontab.guru/, if you want to change the interval.
+
+`crontab -e` :: Show all cronjobs for ark and check if ark update cronjob added successfully.
+
+The command (`crontab -l`) should now display:
+```
+0 * * * * /usr/local/bin/arkmanager --cronjob update @all  --saveworld --warn --update-mods --args  -- >/dev/null 2>&1
+*/10 * * * * /home/ark/ark-watchdog
+```
+
+---
+
+**DONE & HAVE FUN**
+
+---
+
+## 11. Useful commands, files and links ##
+
+### 11.1 Commands for _@all_ instances ###
+
+`arkmanager start @all` :: Start all instances.
+`arkmanager stop @all` :: Stop all instances.
+`arkmanager restart @all` :: ReStart all instances.
+`arkmanager update @all` :: Check all instances for updates and install updates if available.
+`arkmanager status @all` :: Check the online status of all instances.
+
+### 11.2 Commands for a _@single_ instance ###
+
+`arkmanager start @theisland` :: Start the specified instance.
+`arkmanager stop @theisland` :: Stop the specified instance.
+`arkmanager restart @theisland` :: Restart the specified instance.
+`arkmanager update @theisland` :: Check the specified instance for updates and install updates if available.
+`arkmanager status @theisland` :: Check the online status of the specified instance.
+
+### 11.3 Available instances ###
+
+* @theisland
+* @thecenter
+* @ragnarok
+* @scorchedearth
+* @aberration
+
+### 11.4 LinuxGame.ini and GameUserSettings.ini ###
+
+This is the location of the two most important ARK-Server files, _LinuxGame.ini_ (often reffered to as Game.ini) and _GameUserSettings.ini_ (often reffered to as GUS.ini).
+
+`vim /home/ark/ARK-Servers/TheIsland/ShooterGame/Config/Linux/LinuxGame.ini` :: Path to (edit) _LinuxGame.ini_ [red yellow-background]#(change username if applicable)#.
+`vim /home/ark/ARK-Servers/TheIsland/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini` :: Path to (edit) _GameUserSettings.ini_ [red yellow-background]#(change username if applicable)#.
+
+---
+
+## 12. TODO ##
 
 - [x] Add tutorial README.adoc
 - [ ] Add config files and demo configs
