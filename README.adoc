@@ -141,7 +141,7 @@ arkflag_NoBattleEye=true
 ```
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
-See example configuration in 
+See example configuration file in **arkmanager/arkmanager.cfg**.
 
 ---
 
