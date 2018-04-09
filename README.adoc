@@ -20,7 +20,11 @@ This Tutorial will cover:
 
 **_(last document review: 2018/04/09)_**
 
+---
+
 toc::[]
+
+---
 
 ## 1. System Setup ##
 **Operating System:** Debian 8 or derivates like Ubuntu, with sudo installed and root access.
@@ -33,16 +37,19 @@ If you don't have access to the root account, the installation works with sudo a
 
 ### 2.1 Please change these values according to your setup ###
 
+At least change the admin passwort in all instance config files to a really secure passwort.
+
 * **ARK-Server username:** [red yellow-background]*ark*
 * **ARK-Cluster ID:** [red yellow-background]*arkcluster*
+* **Admin Passwort:** [red yellow-background]*123*
 
 ### 2.2 This tutorial will setup following server instances ###
 
 * **Map:** TheIsland - **Instance:** theisland.cfg - **Ports:** 7777,7778,27015,32330
 * **Map:** TheCenter - **Instance:** thecenter.cfg - **Ports:** 7779,7780,27016,32331
-* **Map:** Ragnarok - **Instance:** ragnarok.cfg - **Ports:** 7781,7782,27015,32332
-* **Map:** ScorchedEarth - **Instance:** scorchedearth.cfg - **Ports:** 7783,7784,27015,32333
-* **Map:** Aberration - **Instance:** aberration.cfg - **Ports:** 7785,7786,27015,32334
+* **Map:** Ragnarok - **Instance:** ragnarok.cfg - **Ports:** 7781,7782,27017,32332
+* **Map:** ScorchedEarth - **Instance:** scorchedearth.cfg - **Ports:** 7783,7784,27018,32333
+* **Map:** Aberration - **Instance:** aberration.cfg - **Ports:** 7785,7786,27019,32334
 
 ---
 
@@ -132,29 +139,197 @@ In this step we install the ARK Server-Tools and the steam command line tool ste
 
 ---
 
-## 7. Configure arkmanager and ARK-Server instances ##
+## 7. Configure arkmanager ##
 
 `sudo vim /etc/arkmanager/arkmanager.cfg` :: Configure arkmanager. Add flags, options and more (press `i` for edit mode):
 ```
-arkflag_log=true
-arkflag_NoBattleEye=true
+...
+# config SteamCMD
+steamcmd_user="ark"
+...
+# config environment
+arkbackupdir="/home/ark/ARK-Backups"
+arkStagingDir="/home/ark/ARK-Staging"
+...
+# ARK mods
+ark_GameModIds="731604991"
+...
 ```
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
-See example configuration file in **arkmanager/arkmanager.cfg**.
+These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/arkmanager.cfg[arkmanager.cfg]** file.
 
 ---
 
-## 8. Configure default instance ##
+## 8. Setup and configure ARK-Server instances ##
 
+Create folders to save hard linked references to the serverfiles for all instances (we'll create the hardlinks to the server files in the next step).
+
+`cd` :: Switch to ark server user home directory.
+`mkdir ARK-Servers` :: Create folder for all servers - to keep the installation clean and structured.
+`mkdir ARK-Servers/TheIsland` :: Create folder for TheIsland ARK Server.
+`mkdir ARK-Servers/TheCenter` :: Create folder for TheCenter ARK Server.
+`mkdir ARK-Servers/ScorchedEarth` :: Create folder for ScorchedEarth ARK Server.
+`mkdir ARK-Servers/Ragarok` :: Create folder for Ragnarok ARK Server.
+`mkdir ARK-Servers/Aberration` :: Create folder for Aberration ARK Server.
+
+Create hardlinks to all serverfiles for all instances (to save up disk space).
+
+`cp -al ARK/* ARK-Servers/TheIsland` :: Hardlink TheIsland serverfiles.
+`cp -al ARK/* ARK-Servers/TheCenter` :: Hardlink TheCenter serverfiles.
+`cp -al ARK/* ARK-Servers/ScorchedEarth` :: Hardlink ScorchedEarth serverfiles.
+`cp -al ARK/* ARK-Servers/Ragnarok` :: Hardlink Ragnarok serverfiles.
+`cp -al ARK/* ARK-Servers/Aberration` :: Hardlink Aberration serverfiles.
+
+`rm -r ARK/` :: Remove no longer required server files.
+
+Create ARK Server backups folder.
+
+`mkdir ARK-Backups` :: Create the backup folder.
+`mkdir ARK-Backups/TheIsland` :: Create TheIsland backup folder.
+`mkdir ARK-Backups/TheCenter` :: Create TheCenter backup folder.
+`mkdir ARK-Backups/ScorchedEarth` :: Create ScorchedEarth backup folder.
+`mkdir ARK-Backups/Ragnarok` :: Create Ragnarok backup folder.
+`mkdir ARK-Backups/Aberration` :: Create Aberration backup folder.
+
+Create ARK staging and cluster folder.
+
+`mkdir ARK-Staging` :: Create the staging folder.
+`mkdir ARK-Cluster` :: Create the cluster folder.
+`mkdir ARK-Cluster/clusterdata` :: Create the clusterdata folder.
+
+### 8.1 TheIsland
 `cd /etc/arkmanager/instances/` :: Switch to arkmanager instances folder.
-`sudo cp main.cfg NEW_SERVER_INSTANCE.cfg` :: Copy `main.cfg` (with default settings) to your new instance.
-`sudo vim NEW_SERVER_INSTANCE.cfg` :: Edit your new config. Add flags, options and more (press `i` for edit mode):
+`sudo cp main.cfg theisland.cfg` :: Copy `main.cfg` (with default settings) to theisland instance.
+`sudo vim theisland.cfg` :: Edit theisland instance config. Customize flags, options and more (press `i` for edit mode):
 ```
-arkflag_log=true
-arkflag_NoBattleEye=true
+<<file: /etc/arkmanager/instances/theisland.cfg>>
+
+# config environment
+arkserverroot="/home/ark/ARK-Servers/TheIsland"
+...
+# ARK server options
+serverMap="TheIsland" 
+arkbackupdir="/home/ark/ARK-Backups/TheIsland"
+ark_RCONPort="32330"
+ark_SessionName="ARK Server - TheIsland"
+ark_Port="7778"
+ark_QueryPort="27015"
+ark_ServerPassword="123"
+ark_ServerAdminPassword="123"
+ark_MaxPlayers="50"
+ark_AltSaveDirectoryName="SavedArks/TheIsland"
+...
+# ark cluster settings
+arkopt_clusterid=arkcluster
+arkopt_ClusterDirOverride=/home/ark/ARK-Cluster/clusterdata
+...
 ```
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
+
+These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/TheIsland.cfg[theisland.cfg]** file.
+
+If you finished configuring the first instance (e.g. theisland), continue to copy the instance.cfg file for all other instances.
+
+### 8.2 TheCenter
+
+`sudo cp theisland.cfg thecenter.cfg` :: Copy `theisland.cfg` (with custom settings) to thecenter instance.
+`sudo vim thecenter.cfg` :: Edit thecenter instance config (I removed the server passwort for this instance). Customize all required options for this instance (press `i` for edit mode):
+
+```
+<<file: /etc/arkmanager/instances/thecenter.cfg>>
+
+# config environment
+arkserverroot="/home/ark/ARK-Servers/TheCenter"
+...
+# ARK server options
+serverMap="TheCenter"
+arkbackupdir="/home/ark/ARK-Backups/TheCenter"
+...
+ark_RCONPort="32331"
+ark_SessionName="ARK Server - TheCenter"
+ark_Port="7780"
+ark_QueryPort="27016"
+ark_ServerPassword=""
+ark_AltSaveDirectoryName="SavedArks/TheCenter"
+```
+
+These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/TheCenter.cfg[thecenter.cfg]** file.
+
+### 8.3 ScorchedEarth
+
+`sudo cp thecenter.cfg scorchedearth.cfg` :: Copy `thecenter.cfg` (with custom settings - no server passwort required) to scorchedearth instance.
+`sudo vim scorchedearth.cfg` :: Edit scorchedearth instance config.
+
+```
+<<file: /etc/arkmanager/instances/scorchedearth.cfg>>
+
+# config environment
+arkserverroot="/home/ark/ARK-Servers/ScorchedEarth"
+...
+# ARK server options
+serverMap="ScorchedEarth_P"
+arkbackupdir="/home/ark/ARK-Backups/ScorchedEarth"
+...
+ark_RCONPort="32333"
+ark_SessionName="ARK Server - ScorchedEarth"
+ark_Port="7784"
+ark_QueryPort="27018"
+ark_ServerPassword=""
+ark_AltSaveDirectoryName="SavedArks/ScorchedEarth"
+```
+
+These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/ScorchedEarth.cfg[scorchedearth.cfg]** file.
+
+### 8.4 Ragnarok
+
+`sudo cp thecenter.cfg ragnarok.cfg` :: Copy `thecenter.cfg` (with custom settings - no server passwort required) to ragnarok instance.
+`sudo vim ragnarok.cfg` :: Edit ragnarok instance config.
+
+```
+<<file: /etc/arkmanager/instances/ragnarok.cfg>>
+
+# config environment
+arkserverroot="/home/ark/ARK-Servers/Ragnarok"
+...
+# ARK server options
+serverMap="ScorchedEarth_P"
+arkbackupdir="/home/ark/ARK-Backups/Ragnarok"
+...
+ark_RCONPort="32332"
+ark_SessionName="ARK Server - Ragnarok"
+ark_Port="7782"
+ark_QueryPort="27017"
+ark_ServerPassword=""
+ark_AltSaveDirectoryName="SavedArks/Ragnarok"
+```
+
+These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/ragnarok.cfg[ragnarok.cfg]** file.
+
+### 8.5 Aberration
+
+`sudo cp thecenter.cfg aberration.cfg` :: Copy `thecenter.cfg` (with custom settings - no server passwort required) to aberration instance.
+`sudo vim aberration.cfg` :: Edit aberration instance config.
+
+```
+<<file: /etc/arkmanager/instances/aberration.cfg>>
+
+# config environment
+arkserverroot="/home/ark/ARK-Servers/Aberration"
+...
+# ARK server options
+serverMap="Aberration_P"
+arkbackupdir="/home/ark/ARK-Backups/Aberration"
+...
+ark_RCONPort="32334"
+ark_SessionName="ARK Server - Aberration"
+ark_Port="7786"
+ark_QueryPort="27019"
+ark_ServerPassword=""
+ark_AltSaveDirectoryName="SavedArks/Aberration"
+```
+
+These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/Aberration.cfg[aberration.cfg]** file.
 
 ---
 
