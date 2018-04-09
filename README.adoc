@@ -227,7 +227,7 @@ arkopt_ClusterDirOverride=/home/ark/ARK-Cluster/clusterdata
 ```
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
-These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/TheIsland.cfg[theisland.cfg]** file.
+These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/theisland.cfg[theisland.cfg]** file.
 
 If you finished configuring the first instance (e.g. theisland), continue to copy the instance.cfg file for all other instances.
 
@@ -254,7 +254,7 @@ ark_ServerPassword=""
 ark_AltSaveDirectoryName="SavedArks/TheCenter"
 ```
 
-These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/TheCenter.cfg[thecenter.cfg]** file.
+These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/thecenter.cfg[thecenter.cfg]** file.
 
 ### 8.3 ScorchedEarth
 
@@ -279,7 +279,7 @@ ark_ServerPassword=""
 ark_AltSaveDirectoryName="SavedArks/ScorchedEarth"
 ```
 
-These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/ScorchedEarth.cfg[scorchedearth.cfg]** file.
+These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/scorchedearth.cfg[scorchedearth.cfg]** file.
 
 ### 8.4 Ragnarok
 
@@ -329,7 +329,7 @@ ark_ServerPassword=""
 ark_AltSaveDirectoryName="SavedArks/Aberration"
 ```
 
-These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/Aberration.cfg[aberration.cfg]** file.
+These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/aberration.cfg[aberration.cfg]** file.
 
 ---
 
