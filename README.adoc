@@ -290,13 +290,9 @@ If you finished configuring the first instance (e.g. theisland), continue to cop
 
 ### 8.2 TheCenter
 
-Copy _theisland.cfg_ (with custom settings) to _thecenter.cfg_, to create a new instance.
+Copy _theisland.cfg_ (with custom settings) to _thecenter.cfg_, to create a new instance and edit the newly created server instance configuration file to customize all required server options.
 ```
 $ sudo cp theisland.cfg thecenter.cfg
-```
-
-Edit thecenter instance configuration file and customize all required options.
-```
 $ sudo vim thecenter.cfg
 ```
 
@@ -319,13 +315,9 @@ These are the most important settings. See full example **https://github.com/cyr
 
 ### 8.3 ScorchedEarth
 
-Copy _thecenter.cfg_ (with custom settings) to _scorchedearth.cfg_, to create a new instance.
+Copy _thecenter.cfg_ (with custom settings) to _scorchedearth.cfg_, to create a new instance and edit the newly created server instance configuration file to customize all required server options.
 ```
 $ sudo cp thecenter.cfg scorchedearth.cfg
-```
-
-Edit scorchedearth instance configuration file and customize all required options.
-```
 $ sudo vim scorchedearth.cfg
 ```
 
@@ -348,13 +340,9 @@ These are the most important settings. See full example **https://github.com/cyr
 
 ### 8.4 Ragnarok
 
-Copy _thecenter.cfg_ (with custom settings) to _ragnarok.cfg_, to create a new instance.
+Copy _thecenter.cfg_ (with custom settings) to _ragnarok.cfg_, to create a new instance and edit the newly created server instance configuration file to customize all required server options.
 ```
 $ sudo cp thecenter.cfg ragnarok.cfg
-```
-
-Edit ragnarok instance configuration file and customize all required options.
-```
 $ sudo vim ragnarok.cfg
 ```
 
@@ -377,13 +365,9 @@ These are the most important settings. See full example **https://github.com/cyr
 
 ### 8.5 Aberration
 
-Copy _thecenter.cfg_ (with custom settings) to _aberration.cfg_, to create a new instance.
+Copy _thecenter.cfg_ (with custom settings) to _aberration.cfg_, to create a new instance and edit the newly created server instance configuration file to customize all required server options.
 ```
 $ sudo cp thecenter.cfg aberration.cfg
-```
-
-Edit aberration instance configuration file and customize all required options.
-```
 $ sudo vim aberration.cfg
 ```
 
@@ -410,14 +394,10 @@ These are the most important settings. See full example **https://github.com/cyr
 
 **Install ARK mods created by the community.**
 
-Stop all instances to install Mods.
+Stop all instances to install new Mods and edit the _arkmanager.cfg_ file to set the Mod Id(s).
 ```
 $ arkmanager stop @all
-```
-
-Set the Mod Id(s) in the _arkmanager.cfg_ file.
-```
-$ vim /etc/arkmanager/arkmanager.cfg
+$ sudo vim /etc/arkmanager/arkmanager.cfg
 ``` 
 
 Press `i` for edit mode (specify additional mods by Mod Id, separated by commas).
@@ -425,8 +405,9 @@ Press `i` for edit mode (specify additional mods by Mod Id, separated by commas)
 ark_GameModIds="731604991" 
 ```
 
-Run the _installmods_ command to install the Mod(s) via arkmanager. Update mods and start all instances.
+Switch to home directory and run the _installmods_ command to install the Mod(s) via arkmanager. Update mods and start all instances after installation.
 ```
+$ cd
 $ arkmanager installmods @all
 $ arkmanager update --update-mods
 $ arkmanager start @all
