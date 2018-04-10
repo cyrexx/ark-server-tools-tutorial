@@ -83,8 +83,6 @@ fs.file-max=100000
 ```
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
----
-
 ### 4.2 /etc/security/limits.conf ###
 
 Edit the _limits.conf_ file.
@@ -98,8 +96,6 @@ Add following line above _# End of file_ - if not already present (press `i` for
 * hard nofile 100000
 ```
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
-
----
 
 ### 4.3 /etc/pam.d/common-session ###
 
@@ -481,7 +477,7 @@ Create the shell script (Note: do not use file extensions like .sh, because it's
 $ vim ark-watchdog
 ```
 
-Press `i` for edit mode and enter following script (change the arkmanager folder _/usr/local/bin_ - according to the results of `whereis arkmanager` - if arkmanager is not in _/usr/local/bin/arkmanager_):
+Press `i` for edit mode and enter following script (change the arkmanager folder _/usr/local/bin_ - according to the results of `whereis arkmanager` - if arkmanager is not in _/usr/local/bin/arkmanager_).
 ```
 #!/bin/bash
 
