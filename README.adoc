@@ -6,19 +6,7 @@
 
 **Installation of multiple ark server instances in a crossark travel cluster.**
 
-In this tutorial you will learn how to setup and manage multiple ark servers with enabled crossark travel.
-
-This Tutorial will cover:
-
-* Linux System preparation
-* ARK Server installation
-* Instance configuration
-* Cluster-Setup
-* Mod installation
-* Monitoring all servers for updates
-* Monitoring all server processes (auto restart on failure)
-
-**_(last document review: 2018/04/09)_**
+_(last document review: 2018/04/10)_
 
 ---
 
@@ -35,7 +23,9 @@ If you don't have access to the root account, the installation works with sudo a
 
 ## 2. Important notice ##
 
-### 2.1 Please change these values according to your setup ###
+### 2.1 Change these values ###
+
+**Please change these values according to your setup.**
 
 At least change the admin passwort in all instance config files to a really secure passwort.
 
@@ -43,36 +33,51 @@ At least change the admin passwort in all instance config files to a really secu
 * **ARK-Cluster ID:** [red yellow-background]*arkcluster*
 * **Admin Passwort:** [red yellow-background]*123*
 
-### 2.2 This tutorial will setup following server instances ###
+### 2.2 Server instances ###
 
-* **Map:** TheIsland - **Instance:** theisland.cfg - **Ports:** 7777,7778,27015,32330
-* **Map:** TheCenter - **Instance:** thecenter.cfg - **Ports:** 7779,7780,27016,32331
-* **Map:** Ragnarok - **Instance:** ragnarok.cfg - **Ports:** 7781,7782,27017,32332
-* **Map:** ScorchedEarth - **Instance:** scorchedearth.cfg - **Ports:** 7783,7784,27018,32333
-* **Map:** Aberration - **Instance:** aberration.cfg - **Ports:** 7785,7786,27019,32334
+**This tutorial will setup following server instances:**
 
----
-
-## 3. Install required packages and add ARK-Server user ##
-
-In the first step, we install all required packages to run a full featured ARK-Server. To manage the server, we add a new sudo user to the system called _ARK_SERVER_USERNAME_. Please **change this name** in every step according to your setup.
-
-`su` :: Switch to root user or user with sudo privileges.
-`apt-get update && apt-get upgrade` :: Update package repository and system packages.
-`apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop` :: Install all required packages to run ARK Server-Tools and steamcmd.
+* **Map:** TheIsland - **Instance:** theisland.cfg - **Ports:** 7777,7778,27015,32330 - **Password:** 123
+* **Map:** TheCenter - **Instance:** thecenter.cfg - **Ports:** 7779,7780,27016,32331 - **Password:** none
+* **Map:** Ragnarok - **Instance:** ragnarok.cfg - **Ports:** 7781,7782,27017,32332 - **Password:** none
+* **Map:** ScorchedEarth - **Instance:** scorchedearth.cfg - **Ports:** 7783,7784,27018,32333 - **Password:** none
+* **Map:** Aberration - **Instance:** aberration.cfg - **Ports:** 7785,7786,27019,32334 - **Password:** none
 
 ---
 
-`adduser ark` :: Add ARK-Server user [red yellow-background]#(change username if applicable)#, choose a strong password, other fields can be left blank.
-`adduser ark sudo` :: Add the ARK-Server user to the sudo group [red yellow-background]#(change username if applicable)#.
+## 3. Install required packages ##
+
+**In the first step, we install all required packages to run a full featured ARK-Server. To manage the server, we add a new sudo user to the system called [red yellow-background]#ark#. Please [red yellow-background]#change this name in every step# according to your setup.**
+
+Switch to root user or user with sudo privileges (if you have no root access, don't forget to add `sudo` to all commands), update package repositories and system packages.
+```
+$ su
+$ apt-get update && apt-get upgrade
+```
+
+Install all required packages to run ARK Server-Tools and steamcmd.
+```
+$ apt-get install perl-modules curl lsof libc6-i386 lib32gcc1 bzip2 nano htop
+```
+
+Add ARK-Server user and add the user to the sudo group [red yellow-background]#(change username if applicable)#.
+```
+$ adduser ark
+$ adduser ark sudo
+```
 
 ---
 
-## 4. Configure and prepare Linux system ##
+## 4. Prepare Linux system ##
 
 ### 4.1 /etc/sysctl.conf ###
 
-`vim /etc/sysctl.conf` :: Edit the _sysctl.conf_ file. Add the following line at the very end - if not already present (press `i` for edit mode):
+Edit the _sysctl.conf_ file.
+```
+$ vim /etc/sysctl.conf
+``` 
+
+Add the following line at the very end - if not already present (press `i` for edit mode).
 ```
 fs.file-max=100000
 ```
@@ -82,7 +87,12 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 ### 4.2 /etc/security/limits.conf ###
 
-`vim /etc/security/limits.conf` :: Edit the _limits.conf_ file. Add following line above _# End of file_ - if not already present (press `i` for edit mode):
+Edit the _limits.conf_ file.
+```
+$ vim /etc/security/limits.conf
+``` 
+
+Add following line above _# End of file_ - if not already present (press `i` for edit mode).
 ```
 * soft nofile 100000
 * hard nofile 100000
@@ -93,7 +103,12 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 ### 4.3 /etc/pam.d/common-session ###
 
-`vim /etc/pam.d/common-session` :: Edit the _common-session_ file. Add following line above _# end of pam-auth-update config_ - if not already present (press `i` for edit mode):
+Edit the _common-session_ file.
+```
+$ vim /etc/pam.d/common-session
+```
+
+Add following line above _# end of pam-auth-update config_ - if not already present (press `i` for edit mode).
 ```
 session required pam_limits.so
 ```
@@ -103,45 +118,60 @@ _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 ## 5. Open firewall ports ##
 
-Configure _iptables_ system firewall.
+**Configure _iptables_ system firewall.**
 
 ### 5.1 TCP ###
 
-`iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT` :: Configure TCP ports.
+Configure TCP ports.
+```
+$ iptables -A INPUT -p tcp -m multiport --dports 7777:7786,27015:27019,32330:32335 -j ACCEPT
+```
 
 ### 5.2 UDP ###
 
-`iptables -A INPUT -p udp -m multiport --dports 7777:7786,27015:27019 -j ACCEPT` :: Configure UDP ports.
+Configure UDP ports.
+```
+$ iptables -A INPUT -p udp -m multiport --dports 7777:7786,27015:27019 -j ACCEPT
+```
 
 ---
 
-## 6. Install ARK Server-Tools and steamcmd ##
+## 6. Install ARK Server-Tools & steamcmd ##
 
-In this step we install the ARK Server-Tools and the steam command line tool steamcmd. Both are required to run and manage our ARK server instances efficiently and to keep all instances up-to-date.
+**In this step we install the ARK Server-Tools and the steam command line tool steamcmd. Both are required to run and manage our ARK server instances efficiently and to keep all instances up-to-date.**
 
-`curl -sL http://git.io/vtf5N | bash -s ark --me` :: Download and install ARK Server-Tools [red yellow-background]#(change username if applicable)#.
+Download and install ARK Server-Tools [red yellow-background]#(change username if applicable)#, switch to the ARK-Server user [red yellow-background]#(again change username if applicable)# and goto home directory.
+```
+$ curl -sL http://git.io/vtf5N | bash -s ark --me
+$ su - ark
+```
 
-`su ark` :: Switch to the ARK-Server user [red yellow-background]#(change username if applicable)#.
+Create and goto the steamcmd folder to download and extract steamcmd.
+```
+$ mkdir steamcmd
+$ cd steamcmd
+$ curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
+```
 
-`cd` :: Go to home directory.
-
-`mkdir steamcmd` :: Create the steamcmd folder.
-
-`cd steamcmd` :: Go to to steamcmd folder.
-
-`curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -` :: Download and extract steamcmd.
-
-`arkmanager install` :: While still in steamcmd directory, install arkmanager.
-
-`cd /home/ark/ARK/` :: Go to ARK-Server user home/ARK directory [red yellow-background]#(change username if applicable)#.
-
-`./SteamCMDInstall.sh` :: Install steamcmd.
+While still in steamcmd directory, install arkmanager then goto ARK-Server user _home/ark/ARK_ directory [red yellow-background]#(change username if applicable)# and install steamcmd.
+```
+$ arkmanager install
+$ cd /home/ark/ARK/
+$ ./SteamCMDInstall.sh
+```
 
 ---
 
 ## 7. Configure arkmanager ##
 
-`sudo vim /etc/arkmanager/arkmanager.cfg` :: Configure arkmanager. Add flags, options and more (press `i` for edit mode):
+**Configure arkmanager.cfg to set defaults for all instances.**
+
+Edit arkmanager configuration file.
+```
+$ sudo vim /etc/arkmanager/arkmanager.cfg
+```
+
+Add flags, options and more (press `i` for edit mode).
 ```
 ...
 # config SteamCMD
@@ -161,69 +191,89 @@ These are the most important settings. See full example **https://github.com/cyr
 
 ---
 
-## 8. Setup and configure ARK-Server instances ##
+## 8. Configure ARK-Server instances ##
 
-Create folders to save hard linked references to the serverfiles for all instances (we'll create the hardlinks to the server files in the next step).
+**Create server folders to save hard linked references to the serverfiles for all instances (to save up disk space).**
 
-`cd` :: Switch to ark server user home directory.
-`mkdir ARK-Servers` :: Create folder for all servers - to keep the installation clean and structured.
-`mkdir ARK-Servers/TheIsland` :: Create folder for TheIsland ARK Server.
-`mkdir ARK-Servers/TheCenter` :: Create folder for TheCenter ARK Server.
-`mkdir ARK-Servers/ScorchedEarth` :: Create folder for ScorchedEarth ARK Server.
-`mkdir ARK-Servers/Ragarok` :: Create folder for Ragnarok ARK Server.
-`mkdir ARK-Servers/Aberration` :: Create folder for Aberration ARK Server.
+Switch to ark server user home directory and create a folder for all servers (keeps the installation clean and structured).
+```
+$ cd
+$ mkdir ARK-Servers
+```
 
-Create hardlinks to all serverfiles for all instances (to save up disk space).
+Create server folders.
+```
+$ mkdir ARK-Servers/TheIsland
+$ mkdir ARK-Servers/TheCenter
+$ mkdir ARK-Servers/ScorchedEarth
+$ mkdir ARK-Servers/Ragarok
+$ mkdir ARK-Servers/Aberration
+```
 
-`cp -al ARK/* ARK-Servers/TheIsland` :: Hardlink TheIsland serverfiles.
-`cp -al ARK/* ARK-Servers/TheCenter` :: Hardlink TheCenter serverfiles.
-`cp -al ARK/* ARK-Servers/ScorchedEarth` :: Hardlink ScorchedEarth serverfiles.
-`cp -al ARK/* ARK-Servers/Ragnarok` :: Hardlink Ragnarok serverfiles.
-`cp -al ARK/* ARK-Servers/Aberration` :: Hardlink Aberration serverfiles.
+Create hardlinks to all serverfiles for all instances and remove no longer required server files.
+```
+$ cp -al ARK/* ARK-Servers/TheIsland
+$ cp -al ARK/* ARK-Servers/TheCenter
+$ cp -al ARK/* ARK-Servers/ScorchedEarth
+$ cp -al ARK/* ARK-Servers/Ragnarok
+$ cp -al ARK/* ARK-Servers/Aberration
 
-`rm -r ARK/` :: Remove no longer required server files.
+$ rm -r ARK/
+```
 
-Remove old files and create new SavedArks folders.
+Remove old SavedArks files and create new SavedArks folders.
+```
+$ rm -r ARK-Servers/TheIsland/ShooterGame/Save/SavedArks/*
+$ rm -r ARK-Servers/TheCenter/ShooterGame/Save/SavedArks/*
+$ rm -r ARK-Servers/ScorchedEarth/ShooterGame/Save/SavedArks/*
+$ rm -r ARK-Servers/Ragnarok/ShooterGame/Save/SavedArks/*
+$ rm -r ARK-Servers/Aberration/ShooterGame/Save/SavedArks/*
 
-`rm -r ARK-Servers/TheIsland/ShooterGame/Save/SavedArks/*` :: Remove the old SavedArks folder.
-`mkdir ARK-Servers/TheIsland/ShooterGame/Save/SavedArks/TheIsland` :: Create the new SavedArks folder.
-`rm -r ARK-Servers/TheCenter/ShooterGame/Save/SavedArks/*` :: Remove the old SavedArks folder.
-`mkdir ARK-Servers/TheCenter/ShooterGame/Save/SavedArks/TheCenter` :: Create the new SavedArks folder.
-`rm -r ARK-Servers/ScorchedEarth/ShooterGame/Save/SavedArks/*` :: Remove the old SavedArks folder.
-`mkdir ARK-Servers/ScorchedEarth/ShooterGame/Save/SavedArks/ScorchedEarth` :: Create the new SavedArks folder.
-`rm -r ARK-Servers/Ragnarok/ShooterGame/Save/SavedArks/*` :: Remove the old SavedArks folder.
-`mkdir ARK-Servers/Ragnarok/ShooterGame/Save/SavedArks/Ragnarok` :: Create the new SavedArks folder.
-`rm -r ARK-Servers/Aberration/ShooterGame/Save/SavedArks/*` :: Remove the old SavedArks folder.
-`mkdir ARK-Servers/Aberration/ShooterGame/Save/SavedArks/Aberration` :: Create the new SavedArks folder.
+$ mkdir ARK-Servers/TheIsland/ShooterGame/Save/SavedArks/TheIsland
+$ mkdir ARK-Servers/TheCenter/ShooterGame/Save/SavedArks/TheCenter
+$ mkdir ARK-Servers/ScorchedEarth/ShooterGame/Save/SavedArks/ScorchedEarth
+$ mkdir ARK-Servers/Ragnarok/ShooterGame/Save/SavedArks/Ragnarok
+$ mkdir ARK-Servers/Aberration/ShooterGame/Save/SavedArks/Aberration
+```
 
 Create ARK Server backups folder.
-
-`mkdir ARK-Backups` :: Create the backup folder.
-`mkdir ARK-Backups/TheIsland` :: Create TheIsland backup folder.
-`mkdir ARK-Backups/TheCenter` :: Create TheCenter backup folder.
-`mkdir ARK-Backups/ScorchedEarth` :: Create ScorchedEarth backup folder.
-`mkdir ARK-Backups/Ragnarok` :: Create Ragnarok backup folder.
-`mkdir ARK-Backups/Aberration` :: Create Aberration backup folder.
+```
+$ mkdir ARK-Backups
+$ mkdir ARK-Backups/TheIsland
+$ mkdir ARK-Backups/TheCenter
+$ mkdir ARK-Backups/ScorchedEarth
+$ mkdir ARK-Backups/Ragnarok
+$ mkdir ARK-Backups/Aberration
+```
 
 Create ARK staging and cluster folder.
+```
+$ mkdir ARK-Staging
 
-`mkdir ARK-Staging` :: Create the staging folder.
-`mkdir ARK-Cluster` :: Create the cluster folder.
-`mkdir ARK-Cluster/clusterdata` :: Create the clusterdata folder.
+$ mkdir ARK-Cluster
+$ mkdir ARK-Cluster/clusterdata
+```
 
 ### 8.1 TheIsland
-`cd /etc/arkmanager/instances/` :: Switch to arkmanager instances folder.
-`sudo cp main.cfg theisland.cfg` :: Copy `main.cfg` (with default settings) to theisland instance.
-`sudo vim theisland.cfg` :: Edit theisland instance config. Customize flags, options and more (press `i` for edit mode):
-```
-<<file: /etc/arkmanager/instances/theisland.cfg>>
 
-# config environment
+Goto to arkmanager instances folder and copy the instance configuration file _main.cfg_ (with default settings) to _theisland.cfg_, to create a new customizable instance configuration.
+```
+$ cd /etc/arkmanager/instances/
+$ sudo cp main.cfg theisland.cfg
+```
+
+Edit theisland instance config. Customize flags, options and more.
+```
+$ sudo vim theisland.cfg
+```
+
+Press `i` for edit mode.
+```
 arkserverroot="/home/ark/ARK-Servers/TheIsland"
-...
-# ARK server options
+
 serverMap="TheIsland" 
 arkbackupdir="/home/ark/ARK-Backups/TheIsland"
+
 ark_RCONPort="32330"
 ark_SessionName="ARK Server - TheIsland"
 ark_Port="7778"
@@ -232,33 +282,35 @@ ark_ServerPassword="123"
 ark_ServerAdminPassword="123"
 ark_MaxPlayers="50"
 ark_AltSaveDirectoryName="SavedArks/TheIsland"
-...
-# ark cluster settings
+
 arkopt_clusterid=arkcluster
 arkopt_ClusterDirOverride=/home/ark/ARK-Cluster/clusterdata
-...
 ```
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
 These are the most important settings. See full example **https://github.com/cyrexx/ark-server-tools-tutorial/blob/master/arkmanager/instances/theisland.cfg[theisland.cfg]** file.
 
-If you finished configuring the first instance (e.g. theisland), continue to copy the instance.cfg file for all other instances.
+If you finished configuring the first instance (e.g. theisland), continue to copy the instance .cfg file for all other instances.
 
 ### 8.2 TheCenter
 
-`sudo cp theisland.cfg thecenter.cfg` :: Copy `theisland.cfg` (with custom settings) to thecenter instance.
-`sudo vim thecenter.cfg` :: Edit thecenter instance config (I removed the server passwort for this instance). Customize all required options for this instance (press `i` for edit mode):
-
+Copy _theisland.cfg_ (with custom settings) to _thecenter.cfg_, to create a new instance.
 ```
-<<file: /etc/arkmanager/instances/thecenter.cfg>>
+$ sudo cp theisland.cfg thecenter.cfg
+```
 
-# config environment
+Edit thecenter instance configuration file and customize all required options.
+```
+$ sudo vim thecenter.cfg
+```
+
+Press `i` for edit mode.
+```
 arkserverroot="/home/ark/ARK-Servers/TheCenter"
-...
-# ARK server options
+
 serverMap="TheCenter"
 arkbackupdir="/home/ark/ARK-Backups/TheCenter"
-...
+
 ark_RCONPort="32331"
 ark_SessionName="ARK Server - TheCenter"
 ark_Port="7780"
@@ -271,19 +323,23 @@ These are the most important settings. See full example **https://github.com/cyr
 
 ### 8.3 ScorchedEarth
 
-`sudo cp thecenter.cfg scorchedearth.cfg` :: Copy `thecenter.cfg` (with custom settings - no server passwort required) to scorchedearth instance.
-`sudo vim scorchedearth.cfg` :: Edit scorchedearth instance config.
-
+Copy _thecenter.cfg_ (with custom settings) to _scorchedearth.cfg_, to create a new instance.
 ```
-<<file: /etc/arkmanager/instances/scorchedearth.cfg>>
+$ sudo cp thecenter.cfg scorchedearth.cfg
+```
 
-# config environment
+Edit scorchedearth instance configuration file and customize all required options.
+```
+$ sudo vim scorchedearth.cfg
+```
+
+Press `i` for edit mode.
+```
 arkserverroot="/home/ark/ARK-Servers/ScorchedEarth"
-...
-# ARK server options
+
 serverMap="ScorchedEarth_P"
 arkbackupdir="/home/ark/ARK-Backups/ScorchedEarth"
-...
+
 ark_RCONPort="32333"
 ark_SessionName="ARK Server - ScorchedEarth"
 ark_Port="7784"
@@ -296,19 +352,23 @@ These are the most important settings. See full example **https://github.com/cyr
 
 ### 8.4 Ragnarok
 
-`sudo cp thecenter.cfg ragnarok.cfg` :: Copy `thecenter.cfg` (with custom settings - no server passwort required) to ragnarok instance.
-`sudo vim ragnarok.cfg` :: Edit ragnarok instance config.
-
+Copy _thecenter.cfg_ (with custom settings) to _ragnarok.cfg_, to create a new instance.
 ```
-<<file: /etc/arkmanager/instances/ragnarok.cfg>>
+$ sudo cp thecenter.cfg ragnarok.cfg
+```
 
-# config environment
+Edit ragnarok instance configuration file and customize all required options.
+```
+$ sudo vim ragnarok.cfg
+```
+
+Press `i` for edit mode.
+```
 arkserverroot="/home/ark/ARK-Servers/Ragnarok"
-...
-# ARK server options
-serverMap="ScorchedEarth_P"
+
+serverMap="Ragnarok"
 arkbackupdir="/home/ark/ARK-Backups/Ragnarok"
-...
+
 ark_RCONPort="32332"
 ark_SessionName="ARK Server - Ragnarok"
 ark_Port="7782"
@@ -321,19 +381,23 @@ These are the most important settings. See full example **https://github.com/cyr
 
 ### 8.5 Aberration
 
-`sudo cp thecenter.cfg aberration.cfg` :: Copy `thecenter.cfg` (with custom settings - no server passwort required) to aberration instance.
-`sudo vim aberration.cfg` :: Edit aberration instance config.
-
+Copy _thecenter.cfg_ (with custom settings) to _aberration.cfg_, to create a new instance.
 ```
-<<file: /etc/arkmanager/instances/aberration.cfg>>
+$ sudo cp thecenter.cfg aberration.cfg
+```
 
-# config environment
+Edit aberration instance configuration file and customize all required options.
+```
+$ sudo vim aberration.cfg
+```
+
+Press `i` for edit mode.
+```
 arkserverroot="/home/ark/ARK-Servers/Aberration"
-...
-# ARK server options
+
 serverMap="Aberration_P"
 arkbackupdir="/home/ark/ARK-Backups/Aberration"
-...
+
 ark_RCONPort="32334"
 ark_SessionName="ARK Server - Aberration"
 ark_Port="7786"
@@ -348,16 +412,29 @@ These are the most important settings. See full example **https://github.com/cyr
 
 ## 9. Install mods ##
 
-Set the Mod Ids in the _arkmanager.cfg_ and run the _installmods_ command.
+**Install ARK mods created by the community.**
 
-`arkmanager stop @all` :: Stop all instances to install Mods.
-`vim /etc/arkmanager/arkmanager.cfg` :: Adjust the config file and change following content, specify additional mods by Mod Id separated by commas:
+Stop all instances to install Mods.
+```
+$ arkmanager stop @all
+```
+
+Set the Mod Id(s) in the _arkmanager.cfg_ file.
+```
+$ vim /etc/arkmanager/arkmanager.cfg
+``` 
+
+Press `i` for edit mode (specify additional mods by Mod Id, separated by commas).
 ```
 ark_GameModIds="731604991" 
 ```
-`arkmanager installmods @all` :: Install the Mod(s) via arkmanager.
-`arkmanager update --update-mods` :: Update Mod(s)
-`arkmanager start @all` :: Start all instances.
+
+Run the _installmods_ command to install the Mod(s) via arkmanager. Update mods and start all instances.
+```
+$ arkmanager installmods @all
+$ arkmanager update --update-mods
+$ arkmanager start @all
+```
 
 ---
 
@@ -365,11 +442,17 @@ ark_GameModIds="731604991"
 
 ### 10.1 Server updates
 
-Monitoring all servers for updates. Create a cronjob to check for updates every hour.
+**Monitor all server instances for updates.**
 
-`arkmanager install-cronjob --hourly update @all --saveworld --warn --update-mods` :: Install the arkmanager cronjob.
+Install the arkmanager cronjob to check for updates every hour.
+```
+$ arkmanager install-cronjob --hourly update @all --saveworld --warn --update-mods
+```
 
-`crontab -e` :: Show all cronjobs for ark and check if ark update cronjob added successfully.
+Show all cronjobs for ARK-Server user and check if the update cronjob was successfully added.
+```
+$ crontab -l
+```
 
 The command (`crontab -l`) should display:
 ```
@@ -380,14 +463,25 @@ The command (`crontab -l`) should display:
 
 ### 10.2 Restart server on failure
 
-Monitoring all server processes and restart on failure.
+**Monitor all server processes and restart on failure.**
 
-`cd` :: Go to ARK-Server user home directory.
+Go to ARK-Server user home directory and check if arkmanager is in `/usr/local/bin`, if not, adjust the path to arkmanager in the script (next step).
+```
+$ cd
+$ whereis arkmanager
+```
 
-`whereis arkmanager` :: Check if arkmanager is in `/usr/local/bin`, if not, adjust the path to arkmanager in the script (next step).
+Example Output of `whereis arkmanager`:
+```
+arkmanager: /etc/arkmanager /usr/local/bin/arkmanager
+```
 
-`vim ark-watchdog` :: Create the shell script (Note: do not use file extensions like .sh, because it's Debian policy to have scripts in packages that will be placed in one of the bin folders to not have extensions). Enter following script:
+Create the shell script (Note: do not use file extensions like .sh, because it's Debian policy to have scripts in packages that will be placed in one of the bin folders to not have extensions).
+```
+$ vim ark-watchdog
+```
 
+Press `i` for edit mode and enter following script (change the arkmanager folder _/usr/local/bin_ - according to the results of `whereis arkmanager` - if arkmanager is not in _/usr/local/bin/arkmanager_):
 ```
 #!/bin/bash
 
@@ -409,29 +503,47 @@ fi
 ```
 _Save and exit vim (press `ESC` &rarr; `:wq`)._
 
-The script checks if the specified regular expression (e.g. Port=7777) matches with parts of the command line argument of a running process. If no process command line argument matches the given text, it will restart the affected server instance. You can change the regular expression (regex) to use server names or any other server unique text from the command line argument. E.g. `pgrep -f TheIsland` or `pgrep -f "ShooterGameServer TheCenter"`. But because it is pretty unlikely to have a second process with the same port-text in the process name or arguments, I like to use to the Port number of the server to check if a particular process is running.
+The script checks if the specified regular expression (e.g. Port=7777) matches with parts of the command line argument of a running process. If no process command line argument matches the given text, it will restart the affected server instance. You can change the regular expression (regex) to use server names or any other server unique text from the command line argument. E.g. `pgrep -f TheIsland` or `pgrep -f "ShooterGameServer TheCenter"`. But because it is pretty unlikely to have a second process with the same port command argument in the process name, I like to use to the port number of an ARK-Server to check if its process is running.
 
-`ps axuwww` :: Show full command the server was started with. The desired output looks like (example):
-
+Show full command the server was started with.
 ```
-...
-/home/ark/ARK-Servers/TheIsland/ShooterGame/Binaries/Linux/ShooterGameServer TheIsland?RCONEnabled=True?RCONPort=32330?SessionName=ARK Server - TheIsland?Port=7777?QueryPort=27015?ServerPassword=123?ServerAdminPassword=123?MaxPlayers=50?AltSaveDirectoryName=SavedArks/TheIsland?DifficultyOffset=1.000000?HarvestAmountMultiplier=1.2?ServerPVE=False?AllowFlyingStaminaRecovery=True?bRawSockets?AllowAnyoneBabyImprintCuddle=True?DisableWeatherFog=True?GameModIds=731604991?listen -clusterid=pvearkcluster -ClusterDirOverride=/home/ark/ARK-Cluster/clusterdata -NoTransferFromFiltering -noantispeedhack
-...
+$ ps axuwww
 ```
 
-`chmod u+x ark-watchdog` :: Make the script executable.
+The desired output looks like (example):
+```
+...
+/home/ark/ARK-Servers/TheIsland/ShooterGame/Binaries/Linux/ShooterGameServer TheIsland?RCONEnabled=True?RCONPort=32330?SessionName=ARK Server - TheIsland?Port=7777?QueryPort=27015?ServerPassword=123?ServerAdminPassword=123?MaxPlayers=50?AltSaveDirectoryName=SavedArks/TheIsland?DifficultyOffset=1.000000?HarvestAmountMultiplier=1.2?ServerPVE=False?AllowFlyingStaminaRecovery=True?bRawSockets?AllowAnyoneBabyImprintCuddle=True?DisableWeatherFog=True?GameModIds=731604991?listen -clusterid=arkcluster -ClusterDirOverride=/home/ark/ARK-Cluster/clusterdata -NoTransferFromFiltering -noantispeedhack
+...
+```
 
-`sudo ln -s /home/ark/ark-watchdog /usr/bin/` :: Link watchdog script to the bin folder [red yellow-background]#(change username if applicable)#.
+Make the script executable, link watchdog script to the bin folder [red yellow-background]#(change username if applicable)# and add watchdog cron job to check servers every 10 minutes [red yellow-background]#(change username if applicable)#.
+```
+$ chmod u+x ark-watchdog
+$ sudo ln -s /home/ark/ark-watchdog /usr/bin/
+$ crontab -l | { cat; echo "*/10 * * * * /home/ark/ark-watchdog"; } | crontab -
+```
+Check out https://crontab.guru/, if you want to change the interval.
 
-`crontab -l | { cat; echo "*/10 * * * * /home/ark/ark-watchdog"; } | crontab -` :: Add watchdog cron job and check servers every 10 minutes [red yellow-background]#(change username if applicable)#. Check out https://crontab.guru/, if you want to change the interval.
+Show all cronjobs for ARK-Server user and check if the ark-watchdog cronjob was added successfully.
+```
+$ crontab -l
+```
 
-`crontab -e` :: Show all cronjobs for ark and check if ark update cronjob added successfully.
-
-The command (`crontab -l`) should now display:
+The command `crontab -l` should now display:
 ```
 0 * * * * /usr/local/bin/arkmanager --cronjob update @all  --saveworld --warn --update-mods --args  -- >/dev/null 2>&1
 */10 * * * * /home/ark/ark-watchdog
 ```
+
+Stop an ARK-Server to test the monitoring script.
+```
+$ arkmanager stop @theisland
+$ ark-watchdog
+```
+Your server should be restarting.
+
+If your server does not restart, check the path to arkmanager (`whereis arkmanager`) and the regex to identify the ARK-Servers (see script description).
 
 ---
 
@@ -441,21 +553,27 @@ The command (`crontab -l`) should now display:
 
 ## 11. Useful commands, files and links ##
 
+**A list of useful commands to manage your server instances.**
+
 ### 11.1 Commands for _@all_ instances ###
 
-`arkmanager start @all` :: Start all instances.
-`arkmanager stop @all` :: Stop all instances.
-`arkmanager restart @all` :: ReStart all instances.
-`arkmanager update @all` :: Check all instances for updates and install updates if available.
-`arkmanager status @all` :: Check the online status of all instances.
+```
+$ arkmanager start @all   # Start all instances.
+$ arkmanager stop @all    # Stop all instances.
+$ arkmanager restart @all # Restart all instances.
+$ arkmanager update @all  # Update all instances, if update is available.
+$ arkmanager status @all  # Check the status of all instances.
+```
 
 ### 11.2 Commands for a _@single_ instance ###
 
-`arkmanager start @theisland` :: Start the specified instance.
-`arkmanager stop @theisland` :: Stop the specified instance.
-`arkmanager restart @theisland` :: Restart the specified instance.
-`arkmanager update @theisland` :: Check the specified instance for updates and install updates if available.
-`arkmanager status @theisland` :: Check the online status of the specified instance.
+```
+$ arkmanager start @theisland   # Start specified instance.
+$ arkmanager stop @theisland    # Stop specified instance.
+$ arkmanager restart @theisland # Restart specified instance.
+$ arkmanager update @theisland  # Update specified instance, if update is available.
+$ arkmanager status @theisland  # Check the status of the specified instance.
+```
 
 ### 11.3 Available instances ###
 
@@ -467,28 +585,44 @@ The command (`crontab -l`) should now display:
 
 ### 11.4 LinuxGame.ini and GameUserSettings.ini ###
 
-This is the location of the two most important ARK-Server files, _LinuxGame.ini_ (often reffered to as Game.ini) and _GameUserSettings.ini_ (often reffered to as GUS.ini).
+**This is the location of the two most important ARK-Server files, _LinuxGame.ini_ (often reffered to as Game.ini) and _GameUserSettings.ini_ (often reffered to as GUS.ini).**
 
-`vim /home/ark/ARK-Servers/TheIsland/ShooterGame/Config/Linux/LinuxGame.ini` :: Path to (edit) _LinuxGame.ini_ [red yellow-background]#(change username if applicable)#.
-`vim /home/ark/ARK-Servers/TheIsland/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini` :: Path to (edit) _GameUserSettings.ini_ [red yellow-background]#(change username if applicable)#.
+Path to (edit) _LinuxGame.ini_ [red yellow-background]#(change username if applicable)#.
+```
+$ vim /home/ark/ARK-Servers/TheIsland/ShooterGame/Config/Linux/LinuxGame.ini
+```
+
+Path to (edit) _GameUserSettings.ini_ [red yellow-background]#(change username if applicable)#.
+```
+$ vim /home/ark/ARK-Servers/TheIsland/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
+```
 
 ---
 
-## 12. Create future servers with new maps.
+## 12. Create a new server with different map
 
-`su ark` :: Switch to ARK-Server user [red yellow-background]#(change username if applicable)#.
-`cd` :: Switch to ARK-Server user home directory.
-`mkdir ARK-Servers/NewServer` :: Create the new server folder.
-`cp -al ARK-Servers/TheIsland/* ARK-Servers/NewServer/` :: Copy the server files.
-`mkdir ARK-Backups/NewServer` :: Create the new backup folder.
-`mkdir ARK-Servers/NewServer/ShooterGame/Save/SavedArks/NewServer` :: Create the new SavedArks folder.
-`rm -r ARK-Servers/NewServer/ShooterGame/Save/SavedArks/TheIsland` :: Remove the old SavedArks folder.
+Switch to ARK-Server user [red yellow-background]#(change username if applicable)# and create the new server folder.
+```
+$ su - ark
+$ mkdir ARK-Servers/NewServer
+```
 
-`cd /etc/arkmanager/instances/` :: Switch to arkmanager instances folder.
-`cp /etc/arkmanager/instances/theisland.cfg /etc/arkmanager/instances/newserver.cfg` :: Create a new instance.
-`vim /etc/arkmanager/instances/newserver.cfg` :: Edit instance options.
+Hardlink server files, create new SavedArks and backup folder and remove old SavedArks folder.
+```
+$ cp -al ARK-Servers/TheIsland/* ARK-Servers/NewServer/
+$ mkdir ARK-Backups/NewServer
+$ mkdir ARK-Servers/NewServer/ShooterGame/Save/SavedArks/NewServer
+$ rm -r ARK-Servers/NewServer/ShooterGame/Save/SavedArks/TheIsland
+```
 
-What to change?
+Switch to arkmanager instances folder, create a new instance and edit instance configuration.
+```
+$ cd /etc/arkmanager/instances/
+$ cp theisland.cfg newserver.cfg
+$ vim newserver.cfg
+```
+
+What to change (press `i` for edit mode)?
 
 ```
 arkserverroot="/home/ark/ARK-Servers/NewServer" # Ark server root.
@@ -502,7 +636,10 @@ ark_AltSaveDirectoryName="SavedArks/NewServer"  # Set the new save directory.
 ark_ServerAdminPassword="newserverpassword"     # Set admin passwort.
 ```
 
-`arkmanager start @newserver` :: Start the new server.
+Start the new server.
+```
+$ arkmanager start @newserver
+```
 
 The new server will automatically join the existing cluster.
 
@@ -511,9 +648,7 @@ The new server will automatically join the existing cluster.
 ## 13. TODO ##
 
 - [x] Add tutorial README.adoc
-- [ ] Add config files and demo configs
-- [ ] Test tutorial with sudo access rights
-- [ ] Add more text to headlines
+- [x] Add config files and demo configs
+- [x] Test tutorial with sudo access rights
 - [ ] Add links to sources and wikis
 - [ ] Collect feedback
-- [ ] Add steps to create config files for all instances with demo config options
