@@ -588,8 +588,8 @@ Hardlink server files, create new SavedArks and backup folder and remove old Sav
 ```
 $ cp -al ARK-Servers/TheIsland/* ARK-Servers/NewServer/
 $ mkdir ARK-Backups/NewServer
-$ mkdir ARK-Servers/NewServer/ShooterGame/Save/SavedArks/NewServer
-$ rm -r ARK-Servers/NewServer/ShooterGame/Save/SavedArks/TheIsland
+$ mkdir ARK-Servers/NewServer/ShooterGame/Saved/SavedArks/NewServer
+$ rm -r ARK-Servers/NewServer/ShooterGame/Saved/SavedArks/TheIsland
 ```
 
 Switch to arkmanager instances folder, create a new instance and edit instance configuration.
