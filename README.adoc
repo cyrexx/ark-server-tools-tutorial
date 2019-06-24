@@ -564,6 +564,11 @@ $ arkmanager status @theisland  # Check the status of the specified instance.
 
 **This is the location of the two most important ARK-Server files, _LinuxGame.ini_ (often reffered to as Game.ini) and _GameUserSettings.ini_ (often reffered to as GUS.ini).**
 
+Path to (edit) _Game.ini_ [red yellow-background]#(change username if applicable)#.
+```
+$ vim ./ARK-Servers/TheIsland/ShooterGame/Saved/Config/LinuxServer/Game.ini
+```
+
 Path to (edit) _LinuxGame.ini_ [red yellow-background]#(change username if applicable)#.
 ```
 $ vim /home/ark/ARK-Servers/TheIsland/ShooterGame/Config/Linux/LinuxGame.ini
